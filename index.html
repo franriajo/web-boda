@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>María José &amp; Francisco · 28 de noviembre de 2026</title>
+  <meta name="description" content="Nos casamos — María José & Francisco, sábado 28 de noviembre de 2026." />
+
+  <!-- Fonts: Pinyon Script (caligrafía) + Cormorant Garamond (serif elegante) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css?v=38" />
+  <link rel="icon" href="assets/monogram-mf.png" />
+</head>
+<body>
+
+  <!-- ============ LOGIN GATE (solo en produccion, no en localhost) ============ -->
+  <div id="login-gate">
+    <div class="login-box">
+      <form id="loginForm" class="login-form">
+        <input type="text" id="loginUser" placeholder="Usuario" class="login-input" autocomplete="username" />
+        <input type="password" id="loginPass" placeholder="Contraseña" class="login-input" autocomplete="current-password" />
+        <button type="submit" class="login-btn">Entrar</button>
+        <p class="login-error" id="loginError" hidden>Usuario o contraseña incorrectos</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ INTRO (vídeo real del sobre abriéndose + sello compuesto) ============ -->
+  <div id="intro" class="intro intro--video">
+    <video id="introVideo" class="intro__video" muted playsinline preload="auto"
+           poster="assets/intro-poster.jpg" aria-hidden="true">
+      <source src="assets/intro-sobre.webm" type="video/webm" />
+      <source src="assets/intro-sobre.mp4" type="video/mp4" />
+    </video>
+    <img class="intro__waxseal" src="assets/sello-mf-rojo.png" alt="" aria-hidden="true" />
+    <span class="intro__hint">Toca para abrir</span>
+  </div>
+
+  <!-- ============ MARCA SUPERIOR ============ -->
+  <div class="topbar">
+    <span class="topbar__monogram">M&nbsp;<span class="amp">&amp;</span>&nbsp;F</span>
+  </div>
+
+  <main>
+
+    <!-- ============ PORTADA (acuarela de la finca a todo el ancho) ============ -->
+    <section class="hero hero--finca">
+      <img class="hero__finca-img" src="assets/finca-portada.jpg?v=5" alt="Finca El Pendolero" />
+      <div class="hero__content">
+        <p class="overline">Nos casamos</p>
+        <h1 class="hero__names">
+          <span class="hero__name">María José</span>
+          <span class="hero__amp">&amp;</span>
+          <span class="hero__name">Francisco</span>
+        </h1>
+        <p class="hero__date">Sábado · 28 de noviembre de 2026</p>
+      </div>
+      <a href="#cuenta-atras" class="hero__scroll">Desliza<span class="hero__chevron">&#8964;</span></a>
+    </section>
+
+    <!-- ============ NUESTRA HISTORIA (timeline vertical) ============ -->
+    <section class="section section--story">
+
+      <div class="section-head reveal">
+        <p class="overline">Cómo empezó todo</p>
+        <h2 class="script-title">Nuestra historia</h2>
+      </div>
+
+      <img class="story__hero-bouquet reveal" src="assets/flower-bouquet.png" alt="" aria-hidden="true" />
+
+      <div class="story__timeline reveal">
+
+        <article class="story__chapter">
+          <div class="story__chapter-marker"><span>1</span></div>
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 1</p>
+            <h3 class="story__chapter-title">Real Madrid &ndash; PSG</h3>
+            <p class="story__chapter-text">Dicen que las mejores historias empiezan sin buscarse… y la nuestra es una de ellas. Todo comenzó una tarde viendo un partido de fútbol en casa de una amiga. Éramos amigos de amigos, pero hasta ese momento no sabíamos que aquel encuentro tan casual iba a cambiarlo todo. Lo que empezó como una conversación cualquiera terminó siendo el inicio de nuestra historia.</p>
+          </div>
+        </article>
+
+        <article class="story__chapter">
+          <div class="story__chapter-marker"><span>2</span></div>
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 2</p>
+            <h3 class="story__chapter-title">La Ofrenda de Flores</h3>
+            <p class="story__chapter-text">Durante la Ofrenda de Flores del Pilar llegó uno de los instantes más especiales de nuestras vidas. Entre flores e ilusión, nos prometimos. Ese "sí" marcó el comienzo del camino hacia nuestro gran día.</p>
+          </div>
+        </article>
+
+        <article class="story__chapter">
+          <div class="story__chapter-marker"><span>3</span></div>
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 3</p>
+            <h3 class="story__chapter-title">Nuestra boda</h3>
+            <p class="story__chapter-text">Hoy, con la misma ilusión del primer día y con todo lo vivido juntos, hemos decidido dar el paso más importante: casarnos. Queremos celebrar nuestro amor rodeados de las personas que más queremos y compartir con vosotros este día tan especial. Gracias por formar parte de nuestra historia. ¡Estamos deseando vivir este momento juntos!</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ FOTO PAREJA (a todo el ancho, con degradado arriba y abajo) ============ -->
+    <section class="photo-band">
+      <img class="photo-band__img" src="assets/foto-pareja.jpg?v=2" alt="María José y Francisco en la finca" />
+    </section>
+
+    <!-- ============ CUENTA ATRÁS ============ -->
+    <section id="cuenta-atras" class="countdown reveal">
+      <div class="countdown__inner">
+        <p class="overline">La cuenta atrás ha comenzado</p>
+        <h2 class="script-title">Cuenta atrás</h2>
+        <div class="countdown__timer" id="timer">
+          <div class="countdown__unit"><span class="countdown__num" data-unit="days">00</span><span class="countdown__label">Días</span></div>
+          <div class="countdown__sep">·</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="hours">00</span><span class="countdown__label">Horas</span></div>
+          <div class="countdown__sep">·</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="minutes">00</span><span class="countdown__label">Minutos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ORDEN DEL DÍA ============ -->
+    <section class="section section--schedule">
+      <div class="section-head reveal">
+        <p class="overline">Todo lo que necesitas saber</p>
+        <h2 class="script-title">Orden del día</h2>
+      </div>
+
+      <ol class="timeline reveal">
+        <li class="timeline__item">
+          <img src="assets/flower-bouquet.png" alt="" class="timeline__icon" />
+          <p class="timeline__time">17:00</p>
+          <h3 class="timeline__title">Llegada y bienvenida</h3>
+          <p class="timeline__desc">Recepción y cóctel de bienvenida</p>
+        </li>
+        <li class="timeline__item">
+          <img src="assets/rings.png" alt="" class="timeline__icon" />
+          <p class="timeline__time">17:30</p>
+          <h3 class="timeline__title">Ceremonia</h3>
+          <p class="timeline__desc">El momento más especial del día</p>
+        </li>
+        <li class="timeline__item">
+          <img src="assets/dog-bouquet.png" alt="" class="timeline__icon" />
+          <p class="timeline__time">18:00</p>
+          <h3 class="timeline__title">Cóctel y cena</h3>
+          <p class="timeline__desc">Cena al aire libre bajo las estrellas</p>
+        </li>
+        <li class="timeline__item">
+          <img src="assets/party.png" alt="" class="timeline__icon" />
+          <p class="timeline__time">21:30</p>
+          <h3 class="timeline__title">Fiesta</h3>
+          <p class="timeline__desc">¡A bailar toda la noche!</p>
+        </li>
+        <li class="timeline__item">
+          <img src="assets/couple-dancing.png" alt="" class="timeline__icon" />
+          <p class="timeline__time">02:00</p>
+          <h3 class="timeline__title">Último baile</h3>
+          <p class="timeline__desc">El broche final de una noche inolvidable</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ LUGARES ============ -->
+    <section class="section section--venue">
+      <div class="venue-card reveal">
+        <img src="assets/santa_barbara2.jpeg" alt="Iglesia de Santa Bárbara" class="venue-card__photo venue-card__photo--jpeg" />
+        <p class="overline">La ceremonia se celebrará en</p>
+        <h3 class="venue-card__name">Santa Bárbara</h3>
+        <p class="venue-card__time">17:30</p>
+        <p class="venue-card__address">Añade aquí la dirección de la ceremonia</p>
+        <div class="venue-card__actions">
+          <a class="btn-link" href="https://www.google.com/maps/search/?api=1&query=Santa+Barbara" target="_blank" rel="noopener">Ver en Google Maps</a>
+          <a class="btn-link" href="#" data-cal="ceremonia">Añadir al calendario</a>
+        </div>
+      </div>
+
+      <div class="venue-card reveal">
+        <img src="assets/finca-portada.jpg" alt="Finca El Pendolero" class="venue-card__photo venue-card__photo--jpeg" />
+        <p class="overline">El cóctel se celebrará en</p>
+        <h3 class="venue-card__name">El Pendolero</h3>
+        <p class="venue-card__time">18:00</p>
+        <p class="venue-card__address">Añade aquí la dirección del cóctel</p>
+        <div class="venue-card__actions">
+          <a class="btn-link" href="https://www.google.com/maps/search/?api=1&query=El+Pendolero" target="_blank" rel="noopener">Ver en Google Maps</a>
+          <a class="btn-link" href="#" data-cal="coctel">Añadir al calendario</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ETIQUETA ============ -->
+    <section class="section section--dresscode">
+      <div class="section-head reveal">
+        <p class="overline">Código de vestimenta</p>
+        <h2 class="script-title">De etiqueta</h2>
+      </div>
+
+      <img src="assets/dress-code.png" alt="Invitados vestidos de etiqueta" class="dresscode__img reveal" />
+
+      <p class="section-text reveal">
+        Estamos convencidos de que estaréis todos fabulosos, no obstante, os recordamos que la etiqueta del evento es formal. Por ello, os rogamos evitar el calzado deportivo. Asimismo, el blanco y los tonos similares quedan reservados para la novia.
+      </p>
+
+      <!-- Reglas clave como píldoras visuales -->
+      <div class="dresscode__rules reveal">
+        <span class="dresscode__rule">Etiqueta formal</span>
+        <span class="dresscode__rule-sep">&middot;</span>
+        <span class="dresscode__rule">Sin blanco</span>
+        <span class="dresscode__rule-sep">&middot;</span>
+        <span class="dresscode__rule">Sin calzado deportivo</span>
+      </div>
+
+      <!-- Aviso sobre el frío de diciembre — como un P.D. cálido -->
+      <p class="section-text dresscode__note reveal">
+        Y un pequeño aviso m&aacute;s: es casi diciembre&hellip; así que sacad el abrigo del armario, porque el fr&iacute;o no está invitado, pero seguro que aparece. Si el sol quiere acompañarnos el c&oacute;ctel se celebrará en el patio de la finca.
+      </p>
+    </section>
+
+    <!-- ============ TRANSPORTE ============ -->
+    <section class="section section--transport">
+      <div class="section-head reveal">
+        <p class="overline">Cómo llegar</p>
+        <h2 class="script-title">Transporte</h2>
+        <img src="assets/bus.png" alt="" class="section-head__img" />
+      </div>
+      <p class="section-text reveal">La finca dispone de aparcamiento propio. Sin embargo, al estar situada en pleno Monte del Pardo, el acceso no es el más sencillo.</p>
+      <p class="section-text reveal">Para que no tengáis que preocuparos por nada, habrá servicio de autobuses de ida y vuelta: desde la Iglesia hasta la finca y, al finalizar la celebración, desde la finca a Madrid (con dos horarios diferentes: 20:30 y 23:00h).</p>
+    </section>
+
+    <!-- ============ REGALOS ============ -->
+    <section class="section section--gifts">
+      <div class="section-head reveal">
+        <p class="overline">Un pequeño detalle</p>
+        <h2 class="script-title">Regalos</h2>
+      </div>
+      <p class="section-text reveal">Vuestra presencia es nuestro mejor regalo. Si además queréis tener un detalle con nosotros, podéis contribuir a nuestra luna de miel.</p>
+      <p class="section-text reveal">Gracias de corazón por acompañarnos en este nuevo capítulo de nuestras vidas.</p>
+      <div class="info-list reveal">
+        <div class="info-row">
+          <p class="info-row__label">Transferencia bancaria</p>
+          <p class="info-row__value">Añade aquí tu número de cuenta (IBAN)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONFIRMACIÓN (RSVP) ============ -->
+    <section id="rsvp" class="section section--rsvp">
+      <div class="section-head reveal">
+        <p class="overline">Esperamos veros en este día tan especial</p>
+        <h2 class="script-title">Confirma tu asistencia</h2>
+      </div>
+
+      <p class="rsvp-deadline reveal">No te olvides de completar el formulario antes del <strong>14 de noviembre de 2026</strong></p>
+
+      <form class="rsvp-form reveal" id="rsvpForm">
+        <fieldset class="field">
+          <legend class="field__label">¿Nos acompañarás? *</legend>
+          <label class="radio"><input type="radio" name="asistencia" value="si" required /> Sí, allí estaré</label>
+          <label class="radio"><input type="radio" name="asistencia" value="no" /> Lo siento, no podré asistir</label>
+        </fieldset>
+
+        <div class="field">
+          <label class="field__label" for="nombre">Nombre completo *</label>
+          <input class="input" type="text" id="nombre" name="nombre" required />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="acompanantes">Acompañantes</label>
+          <input class="input" type="text" id="acompanantes" name="acompanantes" />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="alergias">Alergias o necesidades alimentarias</label>
+          <input class="input" type="text" id="alergias" name="alergias" />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="telefono">Teléfono de contacto *</label>
+          <input class="input" type="tel" id="telefono" name="telefono" required />
+        </div>
+
+        <fieldset class="field">
+          <legend class="field__label">Transporte</legend>
+          <label class="checkbox"><input type="checkbox" name="transporte" value="si" /> Necesito transporte a la finca</label>
+        </fieldset>
+
+        <div class="field">
+          <label class="field__label" for="cancion">Canción que te gustaría escuchar</label>
+          <input class="input" type="text" id="cancion" name="cancion" />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="mensaje">Mensaje para los novios (opcional)</label>
+          <textarea class="input" id="mensaje" name="mensaje" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar confirmación</button>
+        <p class="rsvp-form__status" id="rsvpStatus" hidden>¡Gracias por confirmar! Nos vemos el 28 de noviembre. 💛</p>
+        <img id="pitu" src="assets/pitu.jpg" alt="" aria-hidden="true" hidden />
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ============ PIE ============ -->
+  <footer class="footer reveal">
+    <div class="footer__overlay">
+<h2 class="script-title footer__names">María José <span class="amp">&amp;</span> Francisco</h2>
+      <p class="footer__date">28.11.2026</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js?v=6"></script>
+</body>
+</html>
