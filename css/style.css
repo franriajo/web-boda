@@ -274,7 +274,10 @@ a { color: inherit; }
   display: flex; justify-content: center;
   padding: .8rem;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
 }
+.topbar.is-visible { opacity: 1; }
 .topbar__monogram {
   font-family: var(--font-script);
   font-size: 2rem;

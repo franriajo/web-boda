@@ -103,6 +103,20 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000 * 30);
 
+/* ---------- 3a. Topbar: aparece al salir de la portada ---------- */
+const topbar = document.querySelector('.topbar');
+const heroFinca = document.querySelector('.hero--finca');
+if (topbar && heroFinca && 'IntersectionObserver' in window) {
+  const topbarIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      topbar.classList.toggle('is-visible', !entry.isIntersecting);
+    });
+  }, { threshold: 0 });
+  topbarIO.observe(heroFinca);
+} else if (topbar) {
+  topbar.classList.add('is-visible');
+}
+
 /* ---------- 3. Scroll reveal ---------- */
 const revealEls = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window) {
