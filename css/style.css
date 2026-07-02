@@ -318,10 +318,10 @@ a { color: inherit; }
   text-align: center;
   padding: clamp(2.6rem, 7vh, 4rem) 1.5rem 1.4rem;
 }
-.hero--finca .overline { color: var(--ink); margin-bottom: .45em; }
-.hero--finca .hero__date { color: var(--ink); margin: .45em 0 0; }
-.hero--finca .hero__names { font-size: clamp(2.4rem, 9vw, 3.7rem); margin: .18em auto; }
-.hero--finca .hero__amp { font-size: .46em; margin: .2em 0; }
+.hero--finca .overline { color: var(--ink); margin-bottom: 1.1em; }
+.hero--finca .hero__date { color: var(--ink); margin: 1.1em 0 0; }
+.hero--finca .hero__names { font-size: clamp(2.4rem, 9vw, 3.7rem); margin: .45em auto; }
+.hero--finca .hero__amp { font-size: .46em; margin: .55em 0; }
 .hero--finca::before { content: ""; display: none; }
 /* degradado de salida abajo */
 .hero--finca::after {
