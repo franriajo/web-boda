@@ -298,34 +298,45 @@ a { color: inherit; }
 }
 
 /* --- Portada: la acuarela de la finca a TODO EL ANCHO (banner) --- */
+/* BASE (móvil y escritorio): imagen de fondo, texto superpuesto */
 .hero--finca {
   position: relative;
   isolation: isolate;
-  display: flex;
-  flex-direction: column;
+  display: block;
   width: 100%;
-  min-height: 0;
+  min-height: 95svh;
   padding: 0;
   overflow: hidden;
   background: var(--bg);
 }
-/* MÓVIL: texto arriba en crema, imagen debajo con fade en la parte superior */
 .hero__finca-img {
-  width: 100%; display: block;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
 }
 .hero--finca .hero__content {
-  order: -1;
-  position: relative; z-index: 2;
+  position: absolute; top: 0; left: 0; right: 0;
+  z-index: 2;
   text-align: center;
-  padding: clamp(2.6rem, 7vh, 4rem) 1.5rem 1.4rem;
+  padding: clamp(2.5rem, 17vw, 4rem) 1.5rem 0;
 }
 .hero--finca .overline { color: var(--ink); margin-bottom: 1.1em; }
 .hero--finca .hero__date { color: var(--ink); margin: 1.1em 0 0; }
 .hero--finca .hero__names { font-size: clamp(2.4rem, 9vw, 3.7rem); margin: .45em auto; }
 .hero--finca .hero__amp { font-size: .46em; margin: .55em 0; }
-.hero--finca::before { content: ""; display: none; }
+/* velo crema sobre el cielo para que el texto se lea */
+.hero--finca::before {
+  content: "";
+  display: block;
+  position: absolute; inset: 0 0 auto 0; height: 55%;
+  background: linear-gradient(to bottom,
+    hsl(50 28% 92% / .86) 0%,
+    hsl(50 28% 92% / .5) 40%,
+    hsl(50 28% 92% / 0) 100%);
+  z-index: 1; pointer-events: none;
+}
 /* degradado de salida abajo */
 .hero--finca::after {
   content: "";
@@ -334,34 +345,19 @@ a { color: inherit; }
   z-index: 1; pointer-events: none;
 }
 
-/* ESCRITORIO (ancho ≥ 760px): la finca de FONDO a todo el ancho, texto sobre el cielo */
+/* ESCRITORIO (ancho ≥ 760px): aspect-ratio fijo en vez de altura de pantalla */
 @media (min-width: 760px) {
   .hero--finca {
-    display: block;
-    /* imagen completa, a todo el ancho, conservando su forma (sin recortar ni bordes) */
+    min-height: 0;
     aspect-ratio: 822 / 707;
   }
   .hero__finca-img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 0;
+    object-position: center;
   }
   .hero--finca .hero__content {
-    position: absolute; top: 0; left: 0; right: 0;
-    padding: clamp(2.6rem, 6vh, 3.8rem) 1.5rem 0;
+    padding: clamp(3.5rem, 8vh, 5.5rem) 1.5rem 0;
   }
   .hero--finca .hero__names { font-size: clamp(2.1rem, 5.4vw, 3.7rem); }
-  /* velo crema sobre el cielo para que el texto se lea */
-  .hero--finca::before {
-    display: block;
-    position: absolute; inset: 0 0 auto 0; height: 50%;
-    background: linear-gradient(to bottom,
-      hsl(50 28% 92% / .86) 0%,
-      hsl(50 28% 92% / .5) 40%,
-      hsl(50 28% 92% / 0) 100%);
-    z-index: 1; pointer-events: none;
-  }
 }
 /* halo crema: el texto se lee bien sobre cualquier zona del dibujo */
 .hero--finca .overline,
