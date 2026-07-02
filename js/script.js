@@ -134,6 +134,11 @@ if ('IntersectionObserver' in window) {
 }
 
 /* ---------- 4. RSVP form → Google Sheets ---------- */
+function closeModal(modal) {
+  modal.classList.remove('is-open');
+  setTimeout(() => { modal.hidden = true; }, 400);
+}
+
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwfdgbEE03KK2yR4xlz67ByXpckv6NZOVKPR0fAXtyL251JZ6nSIflaVr60nd3oAEuT/exec';
 
 const rsvpForm = document.getElementById('rsvpForm');
@@ -155,20 +160,19 @@ if (rsvpForm) {
         mode: 'no-cors',
         body: JSON.stringify(data),
       });
-      if (status) status.hidden = false;
+      btn.textContent = 'Enviado';
       rsvpForm.reset();
-      const pitu = document.getElementById('pitu');
-      if (pitu) {
-        pitu.hidden = false;
-        requestAnimationFrame(() => requestAnimationFrame(() => pitu.classList.add('is-visible')));
+      const modal = document.getElementById('rsvp-modal');
+      if (modal) {
+        modal.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('is-open')));
+        modal.querySelector('.rsvp-modal__backdrop').addEventListener('click', () => closeModal(modal));
+        modal.querySelector('.rsvp-modal__close').addEventListener('click', () => closeModal(modal));
       }
     } catch (err) {
       btn.disabled = false;
       btn.textContent = 'Enviar confirmación';
-      if (status) {
-        status.textContent = 'Ha habido un error. Por favor inténtalo de nuevo.';
-        status.hidden = false;
-      }
+      alert('Ha habido un error. Por favor inténtalo de nuevo.');
     }
   });
 }

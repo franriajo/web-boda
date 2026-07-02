@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=46" />
+  <link rel="stylesheet" href="css/style.css?v=48" />
   <link rel="icon" href="assets/monogram-mf.png" />
 </head>
 <body>
@@ -298,12 +298,20 @@
         </div>
 
         <button type="submit" class="btn-submit">Enviar confirmación</button>
-        <p class="rsvp-form__status" id="rsvpStatus" hidden>¡Gracias por confirmar! Nos vemos el 28 de noviembre. 💛</p>
-        <img id="pitu" src="assets/pitu.jpg" alt="" aria-hidden="true" hidden />
       </form>
     </section>
 
   </main>
+
+  <!-- Modal de confirmación RSVP -->
+  <div id="rsvp-modal" class="rsvp-modal" hidden aria-modal="true" role="dialog">
+    <div class="rsvp-modal__backdrop"></div>
+    <div class="rsvp-modal__box">
+      <button class="rsvp-modal__close" aria-label="Cerrar">&#x2715;</button>
+      <img class="rsvp-modal__pitu" src="assets/pitu.jpg" alt="" aria-hidden="true" />
+      <p class="rsvp-modal__msg">¡Gracias por confirmar!<br>Nos vemos el 28 de noviembre. 💛</p>
+    </div>
+  </div>
 
   <!-- ============ PIE ============ -->
   <footer class="footer reveal">
@@ -313,6 +321,6 @@
     </div>
   </footer>
 
-  <script src="js/script.js?v=7"></script>
+  <script src="js/script.js?v=8"></script>
 </body>
 </html>
