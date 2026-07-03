@@ -161,9 +161,19 @@ if (rsvpForm) {
         body: JSON.stringify(data),
       });
       btn.textContent = 'Enviado';
+      const asistencia = data.asistencia;
       rsvpForm.reset();
       const modal = document.getElementById('rsvp-modal');
       if (modal) {
+        const pitu = modal.querySelector('.rsvp-modal__pitu');
+        const msg = modal.querySelector('.rsvp-modal__msg');
+        if (asistencia === 'si') {
+          pitu.style.display = '';
+          msg.innerHTML = '¡Gracias por confirmar!<br>Nos vemos el 28 de noviembre. 💛';
+        } else {
+          pitu.style.display = 'none';
+          msg.innerHTML = 'Nos encantaría que hubieras podido acompañarnos, pero lo celebraremos a nuestro regreso con un vino. 🍷';
+        }
         modal.hidden = false;
         requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('is-open')));
         modal.querySelector('.rsvp-modal__backdrop').addEventListener('click', () => closeModal(modal));

@@ -756,7 +756,7 @@ a { color: inherit; }
   position: relative;
   text-align: center;
   color: var(--bg);
-  background: var(--night) url('../assets/finca-portada.jpg') center center / cover no-repeat;
+  background: var(--night) url('../assets/vistas-pendolero.jpg') center center / cover no-repeat;
   padding: 0;
 }
 .footer__overlay {
