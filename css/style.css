@@ -736,7 +736,7 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
   position: relative;
   text-align: center;
   color: var(--bg);
-  background: var(--bg) url('../assets/vistas-pendolero-arq.png') center bottom / cover no-repeat;
+  background: var(--bg) url('../assets/vistas-pendolero-arq.webp') center bottom / cover no-repeat;
   padding: 0;
   margin-top: -2rem;
 }
