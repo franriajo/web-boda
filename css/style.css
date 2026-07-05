@@ -736,7 +736,7 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
    ========================================================= */
 .section--carousel {
   max-width: 100%;
-  padding: 3rem 8rem;
+  padding: 3rem clamp(1rem, 8vw, 8rem);
 }
 
 .carousel-outer {
@@ -765,8 +765,8 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
   flex-shrink: 0;
 }
 .carousel-arrow:hover { background: var(--gold); color: var(--bg); }
-.carousel-arrow--prev { margin-left: 1.2rem; }
-.carousel-arrow--next { margin-right: 1.2rem; }
+.carousel-arrow--prev { margin-left: clamp(.4rem, 2vw, 1.2rem); }
+.carousel-arrow--next { margin-right: clamp(.4rem, 2vw, 1.2rem); }
 
 .carousel {
   flex: 1;

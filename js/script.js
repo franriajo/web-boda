@@ -298,12 +298,19 @@ document.querySelectorAll('[data-cal]').forEach((link) => {
 
   const GAP = 16;           // px — debe coincidir con gap del CSS (1rem)
   const SPEED = 3.0;        // px por frame (~180px/s a 60fps)
-  const VISIBLE = 4;        // fotos visibles entre las flechas
+  function getVisible() {
+    const vw = window.innerWidth;
+    if (vw <= 480) return 2;
+    if (vw <= 768) return 3;
+    return 4;
+  }
 
   function setSlideWidth() {
-    const w = Math.floor((carousel.offsetWidth - (VISIBLE - 1) * GAP) / VISIBLE);
+    const v = getVisible();
+    const w = Math.floor((carousel.offsetWidth - (v - 1) * GAP) / v);
     track.querySelectorAll('.carousel__slide').forEach(s => s.style.width = w + 'px');
   }
+  requestAnimationFrame(setSlideWidth);
   if (document.readyState === 'complete') {
     setSlideWidth();
   } else {
