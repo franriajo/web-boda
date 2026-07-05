@@ -576,6 +576,8 @@ a { color: inherit; }
 }
 .venue-card__photo--church {
   width: clamp(220px, 58%, 350px) !important;
+  mix-blend-mode: normal;
+  filter: sepia(0.18) saturate(0.85) brightness(0.93);
 }
 .venue-card__photo--jpeg {
   filter: saturate(1.35) brightness(1.08);
