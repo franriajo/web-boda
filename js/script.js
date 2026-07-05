@@ -139,7 +139,7 @@ function closeModal(modal) {
   setTimeout(() => { modal.hidden = true; }, 400);
 }
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuz9YLxQswPiSGDaB60UxbMoLzqJCReCh583SW8N08g3FxnHinC36SKatuvpZszK1Y/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxa6qEeKrRfVng2vmPjecpNjHdYn8zx-vsGOZ6cD5lR14NdQN8zR8_Iaddy8v23hwGx/exec';
 
 const rsvpForm = document.getElementById('rsvpForm');
 if (rsvpForm) {
@@ -152,17 +152,34 @@ if (rsvpForm) {
     btn.textContent = 'Enviando…';
 
     const fd = new FormData(rsvpForm);
-    const alergias = fd.getAll('alergia').join(', ') || 'Ninguna';
+    const checked = fd.getAll('alergia');
+    const otrasAlergias = fd.get('alergias-otras') || '';
+    const LABELS = {
+      'sin-gluten':  'Sin gluten / Celíaco',
+      'sin-lactosa': 'Sin lactosa',
+      'vegetariano': 'Vegetariano',
+      'frutos-secos':'Frutos secos',
+      'mariscos':    'Mariscos',
+    };
+    const resumenParts = [
+      ...checked.map(v => LABELS[v] || v),
+      ...(otrasAlergias ? [otrasAlergias] : []),
+    ];
     const data = {
-      asistencia:        fd.get('asistencia') || '',
-      nombre:            fd.get('nombre') || '',
-      acompanantes:      fd.get('acompanantes') || '',
-      alergias:          alergias,
-      'alergias-otras':  fd.get('alergias-otras') || '',
-      telefono:          fd.get('telefono') || '',
-      transporte:        fd.get('transporte') ? 'Sí' : 'No',
-      'transporte-vuelta': fd.get('transporte-vuelta') ? 'Sí' : 'No',
-      mensaje:           fd.get('mensaje') || '',
+      asistencia:           fd.get('asistencia') || '',
+      nombre:               fd.get('nombre') || '',
+      acompanantes:         fd.get('acompanantes') || '',
+      'sin-gluten':         checked.includes('sin-gluten')   ? 'Sí' : 'No',
+      'sin-lactosa':        checked.includes('sin-lactosa')  ? 'Sí' : 'No',
+      'vegetariano':        checked.includes('vegetariano')  ? 'Sí' : 'No',
+      'frutos-secos':       checked.includes('frutos-secos') ? 'Sí' : 'No',
+      'mariscos':           checked.includes('mariscos')     ? 'Sí' : 'No',
+      'alergias-otras':     otrasAlergias,
+      'alergias-resumen':   resumenParts.length ? resumenParts.join(', ') : 'Ninguna',
+      telefono:             fd.get('telefono') || '',
+      transporte:           fd.get('transporte')        ? 'Sí' : 'No',
+      'transporte-vuelta':  fd.get('transporte-vuelta') ? 'Sí' : 'No',
+      mensaje:              fd.get('mensaje') || '',
     };
 
     try {
