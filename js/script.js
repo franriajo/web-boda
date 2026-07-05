@@ -133,13 +133,30 @@ if ('IntersectionObserver' in window) {
   revealEls.forEach((el) => el.classList.add('is-visible'));
 }
 
+/* ---------- 3b. Companion allergy section ---------- */
+const acompInput = document.getElementById('acompanantes');
+const acompAlergias = document.getElementById('acompAlergias');
+const acompNombreLabel = document.getElementById('acompNombreLabel');
+if (acompInput && acompAlergias) {
+  acompInput.addEventListener('input', () => {
+    const nombre = acompInput.value.trim();
+    if (nombre) {
+      acompAlergias.classList.add('is-visible');
+      if (acompNombreLabel) acompNombreLabel.textContent = nombre;
+    } else {
+      acompAlergias.classList.remove('is-visible');
+      if (acompNombreLabel) acompNombreLabel.textContent = 'acompañante';
+    }
+  });
+}
+
 /* ---------- 4. RSVP form → Google Sheets ---------- */
 function closeModal(modal) {
   modal.classList.remove('is-open');
   setTimeout(() => { modal.hidden = true; }, 400);
 }
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxa6qEeKrRfVng2vmPjecpNjHdYn8zx-vsGOZ6cD5lR14NdQN8zR8_Iaddy8v23hwGx/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyhP9VCLRFXfTnEi8DpW2N_7W-U9gyI82J6jtlxTjQvGZSQOtD2YDlYFoX1VK367bdr/exec';
 
 const rsvpForm = document.getElementById('rsvpForm');
 if (rsvpForm) {
@@ -154,32 +171,48 @@ if (rsvpForm) {
     const fd = new FormData(rsvpForm);
     const checked = fd.getAll('alergia');
     const otrasAlergias = fd.get('alergias-otras') || '';
+    const checkedAcomp = fd.getAll('alergia-acomp');
+    const otrasAlergiasAcomp = fd.get('alergias-otras-acomp') || '';
     const LABELS = {
       'sin-gluten':  'Sin gluten / Celíaco',
       'sin-lactosa': 'Sin lactosa',
       'vegetariano': 'Vegetariano',
-      'frutos-secos':'Frutos secos',
-      'mariscos':    'Mariscos',
+      'frutos-secos':'Alergia a frutos secos',
+      'mariscos':    'Alergia a mariscos',
     };
     const resumenParts = [
       ...checked.map(v => LABELS[v] || v),
       ...(otrasAlergias ? [otrasAlergias] : []),
     ];
+    const resumenAcompParts = [
+      ...checkedAcomp.map(v => LABELS[v] || v),
+      ...(otrasAlergiasAcomp ? [otrasAlergiasAcomp] : []),
+    ];
+    const nombreInvitado = fd.get('nombre') || '';
+    const nombreAcomp    = (fd.get('acompanantes') || '').trim();
     const data = {
-      asistencia:           fd.get('asistencia') || '',
-      nombre:               fd.get('nombre') || '',
-      acompanantes:         fd.get('acompanantes') || '',
-      'sin-gluten':         checked.includes('sin-gluten')   ? 'Sí' : 'No',
-      'sin-lactosa':        checked.includes('sin-lactosa')  ? 'Sí' : 'No',
-      'vegetariano':        checked.includes('vegetariano')  ? 'Sí' : 'No',
-      'frutos-secos':       checked.includes('frutos-secos') ? 'Sí' : 'No',
-      'mariscos':           checked.includes('mariscos')     ? 'Sí' : 'No',
-      'alergias-otras':     otrasAlergias,
-      'alergias-resumen':   resumenParts.length ? resumenParts.join(', ') : 'Ninguna',
-      telefono:             fd.get('telefono') || '',
-      transporte:           fd.get('transporte')        ? 'Sí' : 'No',
-      'transporte-vuelta':  fd.get('transporte-vuelta') ? 'Sí' : 'No',
-      mensaje:              fd.get('mensaje') || '',
+      asistencia:          fd.get('asistencia') || '',
+      nombre:              nombreInvitado,
+      acompanantes:        nombreAcomp,
+      'sin-gluten':        checked.includes('sin-gluten')   ? 'Sí' : 'No',
+      'sin-lactosa':       checked.includes('sin-lactosa')  ? 'Sí' : 'No',
+      'vegetariano':       checked.includes('vegetariano')  ? 'Sí' : 'No',
+      'frutos-secos':      checked.includes('frutos-secos') ? 'Sí' : 'No',
+      'mariscos':          checked.includes('mariscos')     ? 'Sí' : 'No',
+      'alergias-otras':    otrasAlergias,
+      'alergias-resumen':  resumenParts.length ? resumenParts.join(', ') : 'Ninguna',
+      // datos del acompañante (el script genera una 2ª fila con ellos)
+      'sin-gluten-acomp':      checkedAcomp.includes('sin-gluten')   ? 'Sí' : 'No',
+      'sin-lactosa-acomp':     checkedAcomp.includes('sin-lactosa')  ? 'Sí' : 'No',
+      'vegetariano-acomp':     checkedAcomp.includes('vegetariano')  ? 'Sí' : 'No',
+      'frutos-secos-acomp':    checkedAcomp.includes('frutos-secos') ? 'Sí' : 'No',
+      'mariscos-acomp':        checkedAcomp.includes('mariscos')     ? 'Sí' : 'No',
+      'alergias-otras-acomp':  otrasAlergiasAcomp,
+      'alergias-resumen-acomp': resumenAcompParts.length ? resumenAcompParts.join(', ') : 'Ninguna',
+      telefono:            fd.get('telefono') || '',
+      transporte:          fd.get('transporte')        ? 'Sí' : 'No',
+      'transporte-vuelta': fd.get('transporte-vuelta') ? 'Sí' : 'No',
+      mensaje:             fd.get('mensaje') || '',
     };
 
     try {

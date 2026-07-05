@@ -290,8 +290,23 @@
         </div>
 
         <div class="field">
-          <label class="field__label" for="acompanantes">Acompañantes</label>
+          <label class="field__label" for="acompanantes">Nombre completo del acompañante</label>
           <input class="input" type="text" id="acompanantes" name="acompanantes" />
+        </div>
+
+        <div class="acomp-alergias" id="acompAlergias">
+          <fieldset class="field">
+            <legend class="field__label acomp-alergias__legend">Alergias del acompañante (<span id="acompNombreLabel">acompañante</span>)</legend>
+            <label class="checkbox"><input type="checkbox" name="alergia-acomp" value="sin-gluten" /> Sin gluten / Celíaco</label>
+            <label class="checkbox"><input type="checkbox" name="alergia-acomp" value="sin-lactosa" /> Sin lactosa</label>
+            <label class="checkbox"><input type="checkbox" name="alergia-acomp" value="vegetariano" /> Vegetariano</label>
+            <label class="checkbox"><input type="checkbox" name="alergia-acomp" value="frutos-secos" /> Alergia a frutos secos</label>
+            <label class="checkbox"><input type="checkbox" name="alergia-acomp" value="mariscos" /> Alergia a mariscos</label>
+          </fieldset>
+          <div class="field">
+            <label style="display:block; margin-bottom:.5rem; color:var(--text);" for="alergias-otras-acomp">Otras alergias o detalles del acompañante</label>
+            <input class="input" type="text" id="alergias-otras-acomp" name="alergias-otras-acomp" />
+          </div>
         </div>
 
         <fieldset class="field">

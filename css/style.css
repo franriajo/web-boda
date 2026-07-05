@@ -731,6 +731,25 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
 .btn-submit:hover { background: var(--night); }
 .rsvp-form__status { text-align: center; margin-top: 1rem; color: var(--gold); }
 
+/* Companion allergy section — hidden until companion name is typed */
+.acomp-alergias {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .4s ease, opacity .3s ease;
+  padding: 0 1rem;
+  margin: 0 -1rem .25rem;
+  border-left: 2px solid var(--gold);
+  background: rgba(255,255,255,.03);
+}
+.acomp-alergias.is-visible {
+  max-height: 600px;
+  opacity: 1;
+  padding: 1rem 1rem;
+  margin: 0 -1rem 1.25rem;
+}
+.acomp-alergias__legend { color: var(--muted); }
+
 /* =========================================================
    PIE — escena nocturna de la finca
    ========================================================= */
