@@ -1,0 +1,885 @@
+/* =========================================================
+   DayNight — Boda María José & Francisco
+   Paleta tomada de la plantilla original (HSL):
+   fondo crema · verde salvia/oliva · dorado
+   ========================================================= */
+:root {
+  --bg:          hsl(50 25% 89%);   /* crema / ivory */
+  --bg-warm:     hsl(50 28% 92%);
+  --ink:         hsl(72 22% 27%);   /* verde oliva oscuro (títulos) */
+  --text:        hsl(72 16% 36%);   /* texto */
+  --muted:       hsl(72 13% 47%);   /* texto suave */
+  --cream:       hsl(55 18% 65%);
+  --border:      hsl(55 15% 70%);
+  --gold:        #882e2b;            /* granate sello M&F */
+  --gold-bright: hsl(42 78% 52%);
+  --night:       hsl(72 22% 20%);   /* base "noche" */
+
+  --font-script:  'Pinyon Script', cursive;
+  --font-body:    'Cormorant Garamond', Georgia, serif;
+  --font-amp:     'EB Garamond', Georgia, serif; /* "&" clásico y legible */
+
+  --maxw: 720px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  font-weight: 400;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  overflow-x: hidden;
+  width: 100%;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ---------- Tipografía compartida ---------- */
+.overline {
+  font-size: .76rem;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: hsl(40 55% 45%);
+  font-weight: 500;
+}
+.script-title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--gold);
+  font-size: clamp(2.8rem, 7vw, 4.6rem);
+  line-height: 1.05;
+  margin: .15em 0 .3em;
+}
+.script-title::after {
+  content: "";
+  display: block;
+  width: 60px; height: 1px;
+  background: var(--gold);
+  opacity: .5;
+  margin: .5em auto 0;
+}
+.section-text {
+  max-width: 540px;
+  margin: 1.1rem auto;
+  text-align: center;
+}
+.section-text--small { font-size: .95rem; color: var(--muted); font-style: italic; }
+
+/* "&" elegante y legible: EB Garamond en redonda (la cursiva de Cormorant
+   tiene un ampersand tipo "Et" antiguo que no se entiende) */
+.amp {
+  font-family: var(--font-amp);
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* =========================================================
+   INTRO — sobre + animación de apertura
+   ========================================================= */
+.intro {
+  position: fixed; inset: 0; z-index: 200;
+  cursor: pointer;
+  /* superficie verde que combina con el sobre (parece una mesa), para que
+     el conjunto llene la pantalla sin bordes que distraigan */
+  background:
+    radial-gradient(120% 90% at 50% 42%, #313a31 0%, #232a23 55%, #1a201a 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+  transition: opacity .9s ease, visibility .9s ease;
+}
+.intro.is-hidden { opacity: 0; visibility: hidden; }
+/* === INTRO en VÍDEO (sobre real + sello compuesto) === */
+.intro__video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background: #0c0f0c;
+}
+/* === Lacre rojo M&F superpuesto (imagen NÍTIDA, no quemada en el vídeo) ===
+   OJO: usar `.intro__waxseal` (NO `.intro__seal`, que choca con reglas del intro CSS antiguo) */
+.intro__waxseal {
+  position: absolute;
+  /* left/top/width los fija el JS (positionWaxSeal) para clavar el lacre en la
+     PUNTA del sobre teniendo en cuenta el recorte object-fit:cover. Estos son
+     solo valores de respaldo por si el JS no corre. */
+  left: 50%; top: 54.6%;
+  transform: translate(-50%, -50%);
+  width: min(30vw, 200px); height: auto;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.45));   /* el lacre apoyado en el sobre */
+  pointer-events: none; user-select: none;
+  z-index: 3;
+  opacity: 1;
+  transition: opacity .45s ease;          /* fundido RÁPIDO al tocar */
+}
+/* al tocar: el lacre se desvanece rápido mientras sigue la animación de apertura */
+.intro.is-opening .intro__waxseal { opacity: 0; }
+/* === SOBRE real (foto del usuario) — a pantalla completa === */
+.intro__envelope {
+  position: relative;
+  width: min(100vw, 153.1vh);          /* lo más grande posible (ratio 739/484) */
+  aspect-ratio: 739 / 484;
+  perspective: 1250px;                  /* más marcada: el giro 3D se nota más */
+  perspective-origin: 50% 38%;
+  filter: drop-shadow(0 30px 55px rgba(0,0,0,.55));
+}
+/* INTERIOR del sobre: MISMA textura rugosa y color que la solapa (homogéneo).
+   Se ve al abrir, rodeando la carta blanca. */
+.intro__inside {
+  position: absolute; inset: 0;
+  background: url('../assets/verde-rugoso.jpg?v=4') center / cover no-repeat;
+}
+/* CARTA blanca. Va DETRÁS del cuerpo y es más grande que la boca festoneada,
+   así el borde visible de la carta es el festón del sobre (queda integrada). */
+.intro__letter {
+  position: absolute; inset: 0;
+  /* la carta está RECESADA dentro del sobre: en penumbra arriba (bajo el filo
+     que la tapa) y se aclara hacia abajo -> da sensación de profundidad/cavidad */
+  background:
+    linear-gradient(180deg, #b9b8b0 0%, #d7d4cb 7%, #ebe8df 20%,
+      #f3f0e8 42%, #f1eee5 72%, #e6e2d8 100%);
+  clip-path: polygon(12% 0, 79% 0, 61% 52%, 34% 52%);
+}
+/* cuerpo/bolsa del sobre. Su boca (trapecio) tiene el borde FESTONEADO/rasgado
+   como el sobre real (patron_interior), así la carta blanca queda integrada con
+   un filo irregular, no recto. La carta blanca va detrás, más grande. */
+.intro__pocket {
+  position: absolute; inset: 0;
+  background: url('../assets/verde-rugoso.jpg?v=4') center / cover no-repeat;
+  /* el filo verde está "levantado" sobre la carta -> proyecta sombra dentro de
+     la boca = profundidad realista (la carta queda recogida y en penumbra) */
+  filter: drop-shadow(0 5px 6px rgba(0,0,0,.6)) drop-shadow(0 1px 10px rgba(0,0,0,.4));
+  clip-path: polygon(0.00% 0.00%, 16.00% 0.00%, 16.16% 0.23%, 16.27% 0.49%, 16.37% 0.75%, 16.46% 1.01%, 16.53% 1.29%, 16.58% 1.57%, 16.66% 1.84%, 16.84% 2.06%, 17.08% 2.26%, 17.30% 2.46%, 17.41% 2.72%, 17.43% 3.01%, 17.44% 3.31%, 17.52% 3.58%, 17.67% 3.82%, 17.83% 4.05%, 17.97% 4.29%, 18.12% 4.53%, 18.32% 4.74%, 18.53% 4.96%, 18.63% 5.21%, 18.60% 5.54%, 18.49% 5.89%, 18.46% 6.21%, 18.61% 6.45%, 18.89% 6.62%, 19.17% 6.80%, 19.36% 7.02%, 19.48% 7.27%, 19.60% 7.52%, 19.73% 7.77%, 19.79% 8.04%, 19.77% 8.36%, 19.74% 8.68%, 19.85% 8.93%, 20.14% 9.11%, 20.49% 9.25%, 20.71% 9.46%, 20.73% 9.76%, 20.63% 10.11%, 20.58% 10.44%, 20.64% 10.71%, 20.76% 10.97%, 20.87% 11.22%, 21.02% 11.46%, 21.27% 11.64%, 21.63% 11.79%, 21.95% 11.95%, 22.05% 12.20%, 21.94% 12.56%, 21.77% 12.95%, 21.76% 13.26%, 21.95% 13.48%, 22.23% 13.65%, 22.44% 13.86%, 22.57% 14.11%, 22.69% 14.36%, 22.84% 14.60%, 22.94% 14.86%, 22.90% 15.18%, 22.78% 15.54%, 22.74% 15.86%, 22.96% 16.07%, 23.39% 16.18%, 23.83% 16.28%, 24.07% 16.48%, 24.09% 16.78%, 24.03% 17.11%, 24.02% 17.42%, 24.07% 17.70%, 24.08% 18.00%, 24.08% 18.31%, 24.17% 18.57%, 24.46% 18.75%, 24.85% 18.87%, 25.13% 19.05%, 25.14% 19.35%, 24.97% 19.73%, 24.84% 20.10%, 24.92% 20.37%, 25.19% 20.55%, 25.48% 20.72%, 25.71% 20.92%, 25.90% 21.14%, 26.13% 21.34%, 26.35% 21.55%, 26.41% 21.83%, 26.25% 22.21%, 26.01% 22.62%, 25.94% 22.96%, 26.16% 23.16%, 26.56% 23.28%, 26.92% 23.43%, 27.08% 23.66%, 27.12% 23.95%, 27.16% 24.23%, 27.25% 24.50%, 27.31% 24.77%, 27.31% 25.08%, 27.32% 25.38%, 27.52% 25.60%, 27.91% 25.72%, 28.33% 25.83%, 28.54% 26.04%, 28.46% 26.39%, 28.25% 26.79%, 28.12% 27.15%, 28.18% 27.43%, 28.35% 27.66%, 28.51% 27.89%, 28.68% 28.12%, 28.94% 28.31%, 29.27% 28.46%, 29.55% 28.64%, 29.61% 28.92%, 29.46% 29.29%, 29.30% 29.67%, 29.35% 29.95%, 29.64% 30.12%, 30.01% 30.26%, 30.26% 30.45%, 30.36% 30.71%, 30.41% 31.00%, 30.47% 31.28%, 30.51% 31.56%, 30.46% 31.89%, 30.35% 32.24%, 30.36% 32.55%, 30.61% 32.74%, 31.06% 32.84%, 31.47% 32.96%, 31.67% 33.17%, 31.64% 33.49%, 31.56% 33.83%, 31.58% 34.13%, 31.68% 34.39%, 31.78% 34.65%, 31.86% 34.92%, 32.00% 35.16%, 32.25% 35.35%, 32.55% 35.52%, 32.74% 35.74%, 32.69% 36.06%, 32.52% 36.45%, 32.42% 36.80%, 32.54% 37.05%, 32.83% 37.22%, 33.14% 37.39%, 33.37% 37.59%, 33.53% 37.82%, 33.70% 38.05%, 33.86% 38.28%, 33.92% 38.56%, 33.85% 38.90%, 33.74% 39.25%, 33.78% 39.54%, 34.01% 39.74%, 34.34% 39.89%, 34.60% 40.08%, 34.69% 40.35%, 34.68% 40.65%, 34.69% 40.96%, 34.77% 41.23%, 34.87% 41.49%, 34.96% 41.75%, 35.06% 42.01%, 35.26% 42.22%, 35.56% 42.39%, 35.84% 42.57%, 35.99% 42.81%, 35.96% 43.12%, 35.88% 43.47%, 35.88% 43.77%, 35.99% 44.03%, 36.17% 44.25%, 36.33% 44.49%, 36.47% 44.73%, 36.62% 44.96%, 36.79% 45.19%, 36.94% 45.43%, 37.01% 45.70%, 37.02% 46.00%, 37.06% 46.29%, 37.19% 46.54%, 37.39% 46.75%, 37.60% 46.96%, 37.74% 47.20%, 37.83% 47.47%, 37.91% 47.73%, 38.00% 48.00%, 38.28% 48.05%, 38.56% 48.00%, 38.84% 47.94%, 39.12% 47.93%, 39.40% 47.96%, 39.68% 47.98%, 39.96% 48.00%, 40.24% 48.06%, 40.51% 48.18%, 40.79% 48.25%, 41.07% 48.18%, 41.35% 47.95%, 41.63% 47.72%, 41.91% 47.64%, 42.19% 47.75%, 42.47% 47.95%, 42.75% 48.08%, 43.03% 48.12%, 43.31% 48.14%, 43.59% 48.18%, 43.87% 48.17%, 44.15% 48.04%, 44.43% 47.83%, 44.71% 47.73%, 44.99% 47.84%, 45.26% 48.12%, 45.54% 48.33%, 45.82% 48.32%, 46.10% 48.12%, 46.38% 47.90%, 46.66% 47.78%, 46.94% 47.76%, 47.22% 47.74%, 47.50% 47.73%, 47.78% 47.83%, 48.06% 48.08%, 48.34% 48.35%, 48.62% 48.45%, 48.90% 48.28%, 49.18% 47.98%, 49.46% 47.77%, 49.74% 47.78%, 50.01% 47.92%, 50.29% 48.03%, 50.57% 48.07%, 50.85% 48.08%, 51.13% 48.12%, 51.41% 48.13%, 51.69% 48.04%, 51.97% 47.83%, 52.25% 47.65%, 52.53% 47.66%, 52.81% 47.88%, 53.09% 48.15%, 53.37% 48.29%, 53.65% 48.25%, 53.93% 48.14%, 54.21% 48.06%, 54.49% 48.01%, 54.76% 47.95%, 55.04% 47.87%, 55.32% 47.85%, 55.60% 47.92%, 55.88% 48.04%, 56.16% 48.11%, 56.44% 48.08%, 56.72% 48.00%, 57.00% 48.00%, 57.11% 47.75%, 57.27% 47.51%, 57.38% 47.25%, 57.42% 46.97%, 57.44% 46.69%, 57.51% 46.41%, 57.63% 46.16%, 57.77% 45.92%, 57.90% 45.67%, 58.02% 45.42%, 58.16% 45.18%, 58.31% 44.94%, 58.40% 44.68%, 58.38% 44.37%, 58.30% 44.05%, 58.27% 43.74%, 58.40% 43.49%, 58.66% 43.30%, 58.93% 43.10%, 59.10% 42.87%, 59.19% 42.61%, 59.25% 42.33%, 59.34% 42.07%, 59.40% 41.80%, 59.39% 41.50%, 59.37% 41.19%, 59.44% 40.93%, 59.68% 40.72%, 59.99% 40.54%, 60.20% 40.32%, 60.22% 40.03%, 60.10% 39.69%, 60.01% 39.36%, 60.05% 39.08%, 60.19% 38.84%, 60.34% 38.60%, 60.49% 38.36%, 60.69% 38.14%, 60.98% 37.95%, 61.25% 37.76%, 61.36% 37.50%, 61.25% 37.16%, 61.05% 36.79%, 60.99% 36.47%, 61.14% 36.24%, 61.43% 36.05%, 61.67% 35.84%, 61.79% 35.59%, 61.85% 35.32%, 61.93% 35.05%, 62.02% 34.79%, 62.02% 34.49%, 61.92% 34.16%, 61.87% 33.85%, 62.03% 33.61%, 62.42% 33.46%, 62.86% 33.33%, 63.11% 33.13%, 63.11% 32.83%, 62.99% 32.49%, 62.90% 32.16%, 62.92% 31.87%, 62.97% 31.59%, 62.99% 31.31%, 63.06% 31.04%, 63.28% 30.82%, 63.63% 30.66%, 63.92% 30.47%, 63.98% 30.20%, 63.81% 29.84%, 63.63% 29.47%, 63.64% 29.18%, 63.88% 28.98%, 64.21% 28.80%, 64.46% 28.60%, 64.62% 28.37%, 64.76% 28.12%, 64.91% 27.88%, 64.98% 27.61%, 64.85% 27.27%, 64.61% 26.88%, 64.48% 26.54%, 64.63% 26.30%, 65.02% 26.15%, 65.42% 26.00%, 65.64% 25.79%, 65.65% 25.50%, 65.61% 25.19%, 65.64% 24.90%, 65.72% 24.63%, 65.75% 24.35%, 65.76% 24.06%, 65.88% 23.81%, 66.18% 23.63%, 66.58% 23.48%, 66.84% 23.28%, 66.80% 22.97%, 66.54% 22.58%, 66.32% 22.20%, 66.32% 21.90%, 66.50% 21.67%, 66.72% 21.46%, 66.91% 21.23%, 67.11% 21.01%, 67.37% 20.82%, 67.64% 20.62%, 67.75% 20.37%, 67.64% 20.03%, 67.43% 19.65%, 67.36% 19.33%, 67.57% 19.12%, 67.95% 18.96%, 68.26% 18.78%, 68.38% 18.53%, 68.36% 18.23%, 68.35% 17.92%, 68.36% 17.64%, 68.36% 17.34%, 68.28% 17.01%, 68.25% 16.70%, 68.41% 16.47%, 68.80% 16.32%, 69.25% 16.19%, 69.52% 16.00%, 69.52% 15.70%, 69.37% 15.35%, 69.27% 15.02%, 69.32% 14.74%, 69.45% 14.49%, 69.56% 14.24%, 69.66% 13.98%, 69.83% 13.75%, 70.09% 13.55%, 70.30% 13.33%, 70.33% 13.05%, 70.17% 12.69%, 69.99% 12.33%, 70.00% 12.04%, 70.25% 11.83%, 70.61% 11.67%, 70.89% 11.48%, 71.04% 11.24%, 71.14% 10.98%, 71.24% 10.73%, 71.31% 10.45%, 71.27% 10.14%, 71.15% 9.80%, 71.09% 9.49%, 71.23% 9.24%, 71.54% 9.06%, 71.86% 8.88%, 72.01% 8.65%, 72.00% 8.34%, 71.93% 8.02%, 71.94% 7.73%, 72.04% 7.47%, 72.15% 7.22%, 72.25% 6.96%, 72.39% 6.72%, 72.62% 6.51%, 72.90% 6.32%, 73.10% 6.09%, 73.11% 5.80%, 72.99% 5.46%, 72.89% 5.13%, 72.92% 4.84%, 73.09% 4.61%, 73.28% 4.39%, 73.43% 4.15%, 73.55% 3.90%, 73.68% 3.65%, 73.82% 3.41%, 73.92% 3.15%, 73.93% 2.86%, 73.92% 2.56%, 73.98% 2.28%, 74.14% 2.04%, 74.36% 1.83%, 74.54% 1.60%, 74.64% 1.35%, 74.68% 1.06%, 74.73% 0.79%, 74.80% 0.52%, 74.88% 0.25%, 75.00% 0.00%, 100.00% 0.00%, 100.00% 100.00%, 0.00% 100.00%);
+  z-index: 2;
+}
+/* SOLAPA superior: sigue los pliegues reales del sobre (medidos en la foto);
+   la punta se esconde detrás del sello. El recorte visible va en ::before
+   para no recortar el sello. */
+.intro__flap {
+  position: absolute; inset: 0;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+  transition: transform 2.1s cubic-bezier(.5,0,.2,1), filter 2.1s ease;
+  will-change: transform;
+  z-index: 3;
+}
+.intro__flap::before {
+  content: ""; position: absolute; inset: 0;
+  background: url('../assets/solapa-limpia.jpg?v=5') center / cover no-repeat;
+  clip-path: polygon(
+    6% 0, 84.4% 0, 84.4% 0.6%, 82.6% 5.2%, 80.3% 9.7%, 78.1% 14.3%,
+    76.5% 18.8%, 75.5% 23.3%, 73.6% 27.9%, 70.8% 32.4%, 69.4% 37%,
+    68.1% 41.5%, 66% 46.1%, 62.9% 50.6%, 61.6% 55.2%, 61% 59.7%,
+    47.5% 72%, 38% 62.6%, 32% 57.6%, 29% 52.7%, 27.5% 48.1%,
+    25.3% 43.2%, 22.1% 38.6%, 20.2% 33.7%, 18.6% 29.1%, 16% 24.2%,
+    13.8% 19.6%, 11.5% 14.7%, 10.2% 10.1%, 7.7% 5.2%, 6% 0.6%);
+}
+/* el sello de lacre gira con la solapa; al pasar de 90° su cara trasera mira al
+   espectador y SE OCULTA (backface) -> el sello se ve cada vez menos y desaparece,
+   como un sobre que se abre de verdad (no se queda entero) */
+.intro__seal {
+  position: absolute;
+  left: 47.0%; top: 52.5%;
+  width: 31.8%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.30));
+  backface-visibility: hidden;
+  z-index: 4;
+}
+
+/* === LUZ Y SOMBRA (fotorrealismo) === */
+/* barrido de luz suave que recorre el papel (sheen), en bucle lento */
+.intro__shine {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: linear-gradient(108deg,
+    transparent 30%, rgba(255,255,255,.05) 42%, rgba(255,255,255,.16) 50%,
+    rgba(255,255,255,.05) 58%, transparent 70%);
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  mix-blend-mode: soft-light;
+  animation: shineSweep 7s ease-in-out 1s infinite;
+}
+@keyframes shineSweep {
+  0%, 100% { background-position: 135% 0; }
+  50%      { background-position: -35% 0; }
+}
+/* el sobre entra en SOMBRA al abrirse (oscurecimiento desde arriba, como el
+   vídeo de referencia) antes de fundirse */
+.intro__shade {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0;
+  /* sombra envolvente: la boca (arriba) en sombra profunda y todo el sobre va
+     a la oscuridad al "entrar"; da sensación de cavidad/profundidad */
+  background: radial-gradient(165% 135% at 50% -2%,
+    rgba(0,0,0,.92) 0%, rgba(0,0,0,.74) 30%, rgba(0,0,0,.58) 55%,
+    rgba(0,0,0,.46) 80%, rgba(0,0,0,.4) 100%);
+}
+.intro.is-opening .intro__shine { animation: none; opacity: 0; transition: opacity .5s; }
+.intro.is-opening .intro__shade { animation: shadeIn 1.9s cubic-bezier(.45,.05,.6,1) .35s forwards; }
+@keyframes shadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* animación de apertura natural: arranca MUY SUAVE (la solapa apenas se mueve)
+   y va GANANDO VELOCIDAD según se abre (ease-in); la perspectiva marcada hace
+   que la solapa venga primero hacia el espectador y luego suba. */
+.intro.is-opening .intro__flap {
+  animation: flapOpen 1.8s forwards;
+}
+@keyframes flapOpen {
+  0%   { transform: rotateX(0deg);    filter: brightness(1);
+         animation-timing-function: cubic-bezier(.45, .02, .78, .15); }   /* lento -> acelera */
+  85%  { transform: rotateX(-125deg); filter: brightness(.9);
+         animation-timing-function: cubic-bezier(.3, .5, .4, 1); }        /* reposo suave */
+  100% { transform: rotateX(-122deg); filter: brightness(.88); }
+}
+/* el sello, además de girar y escorzarse con la solapa, SE DESVANECE según se
+   abre -> se ve cada vez menos hasta desaparecer (no se queda entero) */
+.intro.is-opening .intro__seal { animation: sealFade 1.8s linear forwards; }
+@keyframes sealFade {
+  0%, 42% { opacity: 1; }
+  63%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+/* acercamiento MUY SUTIL (como una cámara real que se aproxima un poco, no un
+   zoom exagerado que delate que es CG) */
+.intro.is-opening .intro__envelope {
+  transform-origin: 50% 42%;
+  animation: envZoom 2.2s cubic-bezier(.4, 0, .6, .5) forwards;
+}
+@keyframes envZoom {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.intro__hint {
+  position: absolute; bottom: 3%; left: 50%;
+  transform: translateX(-50%);
+  font-size: .72rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--bg);
+  background: hsl(72 22% 20% / .55);
+  padding: .5rem 1.2rem; border-radius: 999px;
+  backdrop-filter: blur(4px);
+  animation: pulse 2.2s ease-in-out infinite;
+  white-space: nowrap;
+}
+.intro.is-opening .intro__hint { opacity: 0; transition: opacity .3s ease; }
+@keyframes pulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+/* =========================================================
+   MARCA SUPERIOR
+   ========================================================= */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  display: flex; justify-content: center;
+  padding: .8rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.topbar.is-visible { opacity: 1; }
+.topbar__monogram {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  line-height: 1;
+  color: hsl(40 55% 45%);
+}
+
+/* =========================================================
+   PORTADA
+   ========================================================= */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 5rem 1.5rem 3rem;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--bg-warm), var(--bg) 70%);
+}
+
+/* --- Portada: la acuarela de la finca a TODO EL ANCHO (banner) --- */
+/* BASE (móvil y escritorio): imagen de fondo, texto superpuesto */
+.hero--finca {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  min-height: 95svh;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+.hero__finca-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+}
+.hero--finca .hero__content {
+  position: absolute; top: 0; left: 0; right: 0;
+  z-index: 2;
+  text-align: center;
+  padding: clamp(2.5rem, 17vw, 4rem) 1.5rem 0;
+}
+.hero--finca .overline { color: hsl(40 55% 45%); margin-bottom: 1.1em; }
+.hero--finca .hero__date { color: #882e2b; margin: 1.1em 0 0; }
+.hero--finca .hero__names { font-size: clamp(2.4rem, 9vw, 3.7rem); margin: .45em auto; }
+.hero--finca .hero__amp { font-size: .46em; margin: .55em 0; }
+/* velo crema sobre el cielo para que el texto se lea */
+.hero--finca::before {
+  content: "";
+  display: block;
+  position: absolute; inset: 0 0 auto 0; height: 55%;
+  background: linear-gradient(to bottom,
+    hsl(50 28% 92% / .86) 0%,
+    hsl(50 28% 92% / .5) 40%,
+    hsl(50 28% 92% / 0) 100%);
+  z-index: 1; pointer-events: none;
+}
+/* degradado de salida abajo */
+.hero--finca::after {
+  content: "";
+  position: absolute; inset: auto 0 0 0; height: 22%;
+  background: linear-gradient(to bottom, hsl(50 28% 92% / 0), var(--bg));
+  z-index: 1; pointer-events: none;
+}
+
+/* ESCRITORIO (ancho ≥ 760px): aspect-ratio fijo en vez de altura de pantalla */
+@media (min-width: 760px) {
+  .hero--finca {
+    min-height: 0;
+    aspect-ratio: 822 / 707;
+  }
+  .hero__finca-img {
+    object-position: center;
+  }
+  .hero--finca .hero__content {
+    padding: clamp(3.5rem, 8vh, 5.5rem) 1.5rem 0;
+  }
+  .hero--finca .hero__names { font-size: clamp(2.1rem, 5.4vw, 3.7rem); }
+}
+/* halo crema: el texto se lee bien sobre cualquier zona del dibujo */
+.hero--finca .overline,
+.hero--finca .hero__names,
+.hero--finca .hero__date {
+  text-shadow:
+    0 1px 12px hsl(50 28% 92% / .92),
+    0 0 5px hsl(50 28% 92% / .8);
+}
+
+.hero__names {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--ink);
+  font-size: clamp(2.8rem, 9vw, 5.4rem);
+  line-height: 1.02;
+  margin: .15em auto .25em;
+}
+.hero__name { display: block; }
+.hero__amp {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-amp);
+  font-style: normal;
+  font-size: .5em;
+  line-height: 1;
+  margin: .04em 0;
+}
+.hero__date {
+  font-size: clamp(1rem, 2.4vw, 1.3rem);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+.hero__scroll {
+  position: absolute; z-index: 2;
+  bottom: 1.6rem; left: 50%; transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: .3rem;
+  font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  text-shadow: 0 1px 6px hsl(50 28% 92% / .8);
+}
+.hero__chevron { animation: bob 2s ease-in-out infinite; font-size: 1rem; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+/* =========================================================
+   FOTO PAREJA (banda a todo el ancho, con degradado arriba y abajo)
+   ========================================================= */
+.photo-band {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background: var(--bg);
+  overflow: hidden;
+  line-height: 0;            /* sin hueco bajo la imagen */
+}
+.photo-band__img {
+  width: 100%;
+  display: block;
+}
+/* degradado en los 4 bordes — top, bottom, left, right */
+.photo-band::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, var(--bg) 0%, transparent 22%),
+    linear-gradient(to top,    var(--bg) 0%, transparent 22%),
+    linear-gradient(to right,  var(--bg) 0%, transparent 18%),
+    linear-gradient(to left,   var(--bg) 0%, transparent 18%);
+  z-index: 1; pointer-events: none;
+}
+.photo-band::after { display: none; }
+
+/* =========================================================
+   NUESTRA HISTORIA (timeline vertical — fondo nativo de la página)
+   ========================================================= */
+.section--story { max-width: 760px; }
+
+.story__timeline {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.story__chapter {
+  padding-bottom: 2.6rem;
+}
+
+.story__chapter:last-child { padding-bottom: 0; }
+
+.story__chapter-eyebrow {
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: .2rem;
+}
+
+.story__chapter-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1.65rem;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: .55rem;
+}
+
+.story__chapter-text {
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1.82;
+  text-align: justify;
+}
+
+@media (max-width: 500px) {
+  .story__chapter { gap: 1.2rem; }
+  .story__chapter-title { font-size: 1.4rem; }
+  .story__chapter-text { font-size: 1.05rem; }
+}
+
+/* =========================================================
+   CUENTA ATRÁS
+   ========================================================= */
+.countdown {
+  text-align: center;
+  padding: 5rem 1.5rem;
+  background: var(--bg);
+}
+.countdown .script-title { color: #882e2b; }
+.countdown__timer {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  margin-top: 1rem;
+}
+.countdown__num {
+  display: block;
+  font-size: clamp(2.8rem, 8vw, 4.8rem);
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+}
+.countdown__label {
+  font-size: .68rem; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown__sep { font-size: 2.5rem; color: var(--gold); opacity: .5; align-self: flex-start; }
+
+/* =========================================================
+   SECCIÓN GENÉRICA
+   ========================================================= */
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+.section-head { padding: 1.5rem 0; }
+.section-head__icon { width: 64px; margin: 0 auto 1rem; }
+.section-head__img {
+  display: block;
+  width: clamp(220px, 65%, 340px);
+  margin: 1.4rem auto 0;
+}
+
+/* =========================================================
+   ORDEN DEL DÍA (timeline)
+   ========================================================= */
+.timeline {
+  list-style: none;
+  max-width: 460px;
+  margin: 1rem auto 0;
+  position: relative;
+  border: 1px solid var(--muted);
+  padding: 0 2rem;
+}
+.timeline::before {
+  content: "";
+  position: absolute; top: 2.5rem; bottom: 2.5rem; left: 50%;
+  width: 1px; background: var(--border);
+  transform: translateX(-50%);
+}
+.timeline__item {
+  position: relative;
+  padding: 2rem 0;
+}
+.timeline__content {
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  padding: .4rem 0;
+}
+.timeline__icon {
+  width: 110px; height: 90px; object-fit: contain;
+  margin: 0 auto .6rem;
+}
+.timeline__time {
+  font-size: .8rem; letter-spacing: .25em; color: var(--gold);
+}
+.timeline__title {
+  font-size: 1.6rem; font-weight: 500; color: var(--ink); margin: .1rem 0;
+}
+.timeline__desc { color: var(--muted); font-style: italic; }
+
+/* =========================================================
+   LUGARES
+   ========================================================= */
+.section--venue { max-width: 760px; }
+.venue-card { padding: 2.5rem 1rem; }
+.venue-card__photo {
+  width: clamp(280px, 72%, 480px);
+  display: block;
+  margin: 0 auto 1.5rem;
+  mix-blend-mode: multiply;
+}
+.venue-card__photo--church {
+  width: clamp(220px, 58%, 350px) !important;
+  mix-blend-mode: normal;
+  filter: sepia(0.18) saturate(0.85) brightness(0.93);
+}
+.venue-card__photo--jpeg {
+  filter: saturate(1.35) brightness(1.08);
+  -webkit-mask-image: radial-gradient(ellipse 58% 72% at 50% 53%, black 30%, transparent 70%);
+  mask-image: radial-gradient(ellipse 58% 72% at 50% 53%, black 30%, transparent 70%);
+}
+.venue-card__name {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 500;
+  color: var(--ink);
+  margin: .3rem 0 .1rem;
+}
+.venue-card__time {
+  font-size: .85rem; letter-spacing: .3em; color: var(--gold);
+  margin-bottom: 1rem;
+}
+.venue-card__address { color: var(--muted); margin-bottom: 1rem; }
+.venue-card__actions {
+  display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+}
+.venue-divider {
+  width: 200px; margin: 1rem auto; opacity: .85;
+}
+
+.btn-link {
+  font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 3px;
+  transition: color .2s;
+}
+.btn-link:hover { color: var(--gold); }
+
+/* =========================================================
+   ETIQUETA / listas de info
+   ========================================================= */
+.dresscode__img { max-width: min(420px, 100%); margin: 0 auto 1.5rem; }
+
+/* Tres reglas clave como píldoras centradas */
+.dresscode__rules {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .7rem 1rem;
+  margin: 1.8rem auto;
+  max-width: 520px;
+}
+.dresscode__rule {
+  font-size: .7rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  padding: .45rem 1.2rem;
+  border: 1px solid hsl(40 55% 45% / .45);
+  border-radius: 999px;
+}
+.dresscode__rule-sep {
+  color: hsl(40 55% 45% / .35);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Aviso sobre el frío — P.D. elegante e italico */
+.dresscode__note {
+  font-style: italic;
+  color: var(--muted);
+  font-size: .97rem;
+  margin-top: .2rem;
+}
+.info-list { max-width: 520px; margin: 1.5rem auto 0; }
+.info-row { padding: 1.3rem 0; border-bottom: 1px solid var(--border); }
+.info-row:first-child { border-top: 1px solid var(--border); }
+.info-row__label {
+  font-size: .68rem; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .4rem;
+}
+.info-row__value { color: var(--text); }
+
+/* =========================================================
+   CONFIRMACIÓN (RSVP)
+   ========================================================= */
+.rsvp-deadline {
+  max-width: 460px; margin: 0 auto 2rem;
+  padding: .9rem 1.4rem;
+  border: 1px solid hsl(40 55% 45% / .4);
+  font-size: .92rem; line-height: 1.6;
+  color: var(--text); text-align: center;
+  background: hsl(40 55% 45% / .06);
+}
+.rsvp-deadline strong { color: var(--gold); font-weight: 500; }
+/* Desplegable transferencia bancaria */
+.info-list { max-width: 400px; margin: 1.5rem auto 0; }
+.transfer { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.transfer__toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .85rem 1.2rem;
+  font-family: var(--font-body); font-size: .72rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text); cursor: pointer; list-style: none;
+  background: hsl(40 55% 45% / .06);
+}
+.transfer__toggle::-webkit-details-marker { display: none; }
+.transfer__toggle::after {
+  content: '›'; font-size: 1.2rem; line-height: 1;
+  transition: transform .25s ease; display: inline-block;
+}
+details[open] .transfer__toggle::after { transform: rotate(90deg); }
+.transfer__body {
+  padding: 1rem 1.2rem 1.1rem;
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; align-items: baseline;
+}
+.transfer__label {
+  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+.transfer__value {
+  font-size: .95rem; color: var(--text); letter-spacing: .04em;
+}
+
+.rsvp-form { max-width: 460px; margin: 1.5rem auto 0; text-align: left; }
+.field { border: 0; margin-bottom: 1.5rem; }
+.field__label {
+  display: block;
+  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .5rem;
+}
+.field__hint { font-size: .95rem; color: var(--muted); font-style: italic; margin-bottom: .5rem; }
+.input {
+  width: 100%;
+  font-family: var(--font-body); font-size: 1.05rem; color: var(--ink);
+  background: var(--bg-warm);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: .65rem .85rem;
+}
+.input:focus { outline: none; border-color: var(--gold); }
+.radio, .checkbox {
+  display: flex; align-items: center; gap: .6rem;
+  color: var(--text); margin-bottom: .5rem; cursor: pointer;
+}
+.btn-submit {
+  display: block; width: 100%;
+  font-family: var(--font-body);
+  font-size: .82rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--bg); background: var(--ink);
+  border: 0; border-radius: 999px; padding: 1rem; cursor: pointer;
+  transition: background .2s;
+}
+.btn-submit:hover { background: var(--night); }
+.rsvp-form__status { text-align: center; margin-top: 1rem; color: var(--gold); }
+
+/* =========================================================
+   PIE — escena nocturna de la finca
+   ========================================================= */
+.footer {
+  position: relative;
+  text-align: center;
+  color: var(--bg);
+  background: var(--bg) url('../assets/vistas-pendolero-arq.webp') center bottom / cover no-repeat;
+  padding: 0;
+  margin-top: -2rem;
+}
+.footer__overlay {
+  background: linear-gradient(180deg, transparent 0%, hsl(72 25% 16% / .6) 60%);
+  padding: 16rem 1.5rem 3.5rem;
+}
+.footer__monogram {
+  font-family: var(--font-script);
+  font-size: 3rem;
+  color: var(--bg);
+  opacity: .92;
+  margin-bottom: .3rem;
+}
+.footer__names { color: var(--bg); }
+.footer__names::after { background: var(--bg); }
+.footer__date {
+  letter-spacing: .3em; font-size: 1.1rem; margin-bottom: 2rem; color: var(--bg);
+}
+.footer__credit {
+  font-size: .68rem; letter-spacing: .25em; text-transform: uppercase;
+  opacity: .8;
+}
+
+/* =========================================================
+   REVELADO AL HACER SCROLL
+   ========================================================= */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 640px) {
+  .countdown__sep { display: none; }
+  .countdown__timer { gap: 1.4rem; }
+  .footer__overlay { padding: 11rem 1.5rem 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero__chevron, .intro__hint { animation: none; }
+}
+
+/* =========================================================
+   LOGIN GATE
+   ========================================================= */
+#login-gate {
+  position: fixed; inset: 0; z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: hsl(0 0% 0% / .15);
+  transition: opacity .4s;
+}
+#login-gate.is-hidden { opacity: 0; pointer-events: none; }
+.login-box {
+  background: hsl(40 30% 95% / .82);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  padding: 2.2rem 2.2rem 2rem;
+  max-width: 300px; width: 85%;
+  text-align: center;
+  box-shadow: 0 8px 40px hsl(0 0% 0% / .18);
+  border: 1px solid hsl(40 30% 90% / .7);
+}
+.login-form { display: flex; flex-direction: column; gap: .9rem; }
+.login-input {
+  width: 100%; padding: .7rem 1rem; box-sizing: border-box;
+  border: 1px solid hsl(40 30% 78%); background: transparent;
+  font-family: var(--font-body); font-size: 1rem; color: var(--ink);
+  text-align: center; outline: none;
+}
+.login-input:focus { border-color: var(--gold); }
+.login-btn {
+  margin-top: .4rem; padding: .75rem 2rem;
+  background: var(--gold); color: var(--bg); border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: .75rem;
+  letter-spacing: .22em; text-transform: uppercase;
+}
+.login-btn:hover { opacity: .85; }
+.login-error { font-size: .85rem; color: #a04040; margin-top: .2rem; }
+
+/* ---------- Pitu ---------- */
+/* =========================================================
+   MODAL RSVP
+   ========================================================= */
+.rsvp-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.rsvp-modal[hidden] { display: none; }
+.rsvp-modal__backdrop {
+  position: absolute; inset: 0;
+  background: hsl(0 0% 0% / .45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.rsvp-modal__box {
+  position: relative; z-index: 1;
+  background: var(--bg);
+  border: 1px solid hsl(40 55% 45% / .25);
+  border-radius: 4px;
+  padding: 2.2rem 2rem 1.5rem;
+  max-width: 360px; width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 40px hsl(0 0% 0% / .18);
+  opacity: 0; transform: translateY(18px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.rsvp-modal.is-open .rsvp-modal__box {
+  opacity: 1; transform: none;
+}
+.rsvp-modal__close {
+  position: absolute; top: .7rem; right: .9rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.1rem; color: var(--ink); opacity: .5;
+  line-height: 1; padding: .2rem .4rem;
+}
+.rsvp-modal__close:hover { opacity: 1; }
+.rsvp-modal__msg {
+  font-family: var(--font-serif);
+  font-size: 1.05rem; line-height: 1.7;
+  color: var(--text); margin: .2rem 0 0;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .8s ease 1.2s, transform .8s ease 1.2s;
+}
+.rsvp-modal.is-open .rsvp-modal__msg {
+  opacity: 1; transform: none;
+}
+.rsvp-modal__pitu {
+  display: block;
+  width: clamp(140px, 55%, 220px);
+  margin: .8rem auto .4rem;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 50% 42%, black 35%, transparent 75%);
+  mask-image: radial-gradient(ellipse 72% 68% at 50% 42%, black 35%, transparent 75%);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 1s ease .2s, transform 1s ease .2s;
+}
+.rsvp-modal.is-open .rsvp-modal__pitu {
+  opacity: 1; transform: none;
+}

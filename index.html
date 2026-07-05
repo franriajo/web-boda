@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>María José &amp; Francisco · 28 de noviembre de 2026</title>
+  <meta name="description" content="Nos casamos — María José & Francisco, sábado 28 de noviembre de 2026." />
+
+  <!-- Fonts: Pinyon Script (caligrafía) + Cormorant Garamond (serif elegante) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css?v=54" />
+  <link rel="icon" href="assets/monogram-mf.webp" />
+</head>
+<body>
+
+  <!-- ============ LOGIN GATE (solo en produccion, no en localhost) ============ -->
+  <div id="login-gate">
+    <div class="login-box">
+      <form id="loginForm" class="login-form">
+        <input type="text" id="loginUser" placeholder="Usuario" class="login-input" autocomplete="username" />
+        <input type="password" id="loginPass" placeholder="Contraseña" class="login-input" autocomplete="current-password" />
+        <button type="submit" class="login-btn">Entrar</button>
+        <p class="login-error" id="loginError" hidden>Usuario o contraseña incorrectos</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ INTRO (vídeo real del sobre abriéndose + sello compuesto) ============ -->
+  <div id="intro" class="intro intro--video">
+    <video id="introVideo" class="intro__video" muted playsinline preload="auto"
+           poster="assets/intro-poster.jpg" aria-hidden="true">
+      <source src="assets/intro-sobre.webm" type="video/webm" />
+      <source src="assets/intro-sobre.mp4" type="video/mp4" />
+    </video>
+    <img class="intro__waxseal" src="assets/sello-mf-rojo.webp" alt="" aria-hidden="true" />
+    <span class="intro__hint">Toca para abrir</span>
+  </div>
+
+  <!-- ============ MARCA SUPERIOR ============ -->
+  <div class="topbar">
+    <span class="topbar__monogram">M&nbsp;<span class="amp">&amp;</span>&nbsp;F</span>
+  </div>
+
+  <main>
+
+    <!-- ============ PORTADA (acuarela de la finca a todo el ancho) ============ -->
+    <section class="hero hero--finca">
+      <img class="hero__finca-img" src="assets/finca-portada.jpg?v=5" alt="Finca El Pendolero" />
+      <div class="hero__content">
+        <p class="overline">Nos casamos</p>
+        <h1 class="hero__names">
+          <span class="hero__name">María José</span>
+          <span class="hero__amp">&amp;</span>
+          <span class="hero__name">Francisco</span>
+        </h1>
+        <p class="hero__date">Sábado · 28 de noviembre de 2026</p>
+      </div>
+      <a href="#cuenta-atras" class="hero__scroll">Desliza<span class="hero__chevron">&#8964;</span></a>
+    </section>
+
+    <!-- ============ CUENTA ATRÁS ============ -->
+    <section id="cuenta-atras" class="countdown reveal">
+      <div class="countdown__inner">
+        <p class="overline">La cuenta atrás ha comenzado</p>
+        <h2 class="script-title">Cuenta atrás</h2>
+        <div class="countdown__timer" id="timer">
+          <div class="countdown__unit"><span class="countdown__num" data-unit="days">00</span><span class="countdown__label">Días</span></div>
+          <div class="countdown__sep">·</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="hours">00</span><span class="countdown__label">Horas</span></div>
+          <div class="countdown__sep">·</div>
+          <div class="countdown__unit"><span class="countdown__num" data-unit="minutes">00</span><span class="countdown__label">Minutos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOTO PAREJA (a todo el ancho, con degradado arriba y abajo) ============ -->
+    <section class="photo-band">
+      <img class="photo-band__img" src="assets/foto-pareja.jpg?v=2" alt="María José y Francisco en la finca" />
+    </section>
+
+    <!-- ============ NUESTRA HISTORIA ============ -->
+    <section class="section section--story">
+
+      <div class="section-head reveal">
+        <p class="overline">Cómo empezó todo</p>
+        <h2 class="script-title">Nuestra historia</h2>
+      </div>
+
+      <div class="story__timeline reveal">
+
+        <article class="story__chapter">
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 1</p>
+            <h3 class="story__chapter-title">Real Madrid &ndash; PSG</h3>
+            <p class="story__chapter-text">Dicen que las mejores historias empiezan sin buscarse… y la nuestra es una de ellas. Todo comenzó una tarde viendo un partido de fútbol en casa de una amiga. Éramos amigos de amigos, pero hasta ese momento no sabíamos que aquel encuentro tan casual iba a cambiarlo todo. Lo que empezó como una conversación cualquiera terminó siendo el inicio de nuestra historia.</p>
+          </div>
+        </article>
+
+        <article class="story__chapter">
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 2</p>
+            <h3 class="story__chapter-title">La Ofrenda de Flores</h3>
+            <p class="story__chapter-text">Durante la Ofrenda de Flores del Pilar llegó uno de los instantes más especiales de nuestras vidas. Entre flores e ilusión, nos prometimos. Ese "sí" marcó el comienzo del camino hacia nuestro gran día.</p>
+          </div>
+        </article>
+
+        <article class="story__chapter">
+          <div class="story__chapter-body">
+            <p class="story__chapter-eyebrow">Capítulo 3</p>
+            <h3 class="story__chapter-title">Nuestra boda</h3>
+            <p class="story__chapter-text">Hoy, con la misma ilusión del primer día y con todo lo vivido juntos, hemos decidido dar el paso más importante: casarnos. Queremos celebrar nuestro amor rodeados de las personas que más queremos y compartir con vosotros este día tan especial. Gracias por formar parte de nuestra historia. ¡Estamos deseando vivir este momento juntos!</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ ORDEN DEL DÍA ============ -->
+    <section class="section section--schedule">
+      <div class="section-head reveal">
+        <p class="overline">Todo lo que necesitas saber</p>
+        <h2 class="script-title">Orden del día</h2>
+      </div>
+
+      <ol class="timeline reveal">
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-ceremonia.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">11:15h</p>
+            <h3 class="timeline__title">Ceremonia</h3>
+            <p class="timeline__desc">Iglesia de Santa Bárbara</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-bus.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">12:45h</p>
+            <h3 class="timeline__title">Autobús</h3>
+            <p class="timeline__desc">De Santa Bárbara a El Pendolero</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-coctel.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">13:45h</p>
+            <h3 class="timeline__title">Cóctel</h3>
+            <p class="timeline__desc">Bienvenida en El Pendolero</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-comida.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">15:30h</p>
+            <h3 class="timeline__title">Comida</h3>
+            <p class="timeline__desc">A disfrutar de la mesa</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-fiesta.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">18:00h</p>
+            <h3 class="timeline__title">Fiesta</h3>
+            <p class="timeline__desc">¡A bailar!</p>
+          </div>
+        </li>
+        <li class="timeline__item">
+          <div class="timeline__content">
+            <img src="assets/schedule-bus.webp" alt="" class="timeline__icon" />
+            <p class="timeline__time">20:30h · 23:00h</p>
+            <h3 class="timeline__title">Autobús de vuelta</h3>
+            <p class="timeline__desc">Dos salidas desde la finca a Madrid</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ LUGARES ============ -->
+    <section class="section section--venue">
+      <div class="venue-card reveal reveal--transform-only">
+        <img src="assets/sta_barbara_nobg.webp" alt="Iglesia de Santa Bárbara" class="venue-card__photo venue-card__photo--church" style="width:clamp(220px,63%,420px)" />
+        <p class="overline">La ceremonia se celebrará en</p>
+        <h3 class="venue-card__name">Santa Bárbara</h3>
+        <p class="venue-card__time">11:15 h</p>
+        <p class="venue-card__address">Calle del Gral. Castaños, 2, Centro, 28004 Madrid</p>
+        <div class="venue-card__actions">
+          <a class="btn-link" href="https://maps.app.goo.gl/2CwjN4wdZ2AbDQbu5" target="_blank" rel="noopener">Ver en Google Maps</a>
+        </div>
+      </div>
+
+      <div class="venue-card reveal">
+        <img src="assets/finca-coctel.webp" alt="Finca El Pendolero" class="venue-card__photo" />
+        <p class="overline">El cóctel se celebrará en</p>
+        <h3 class="venue-card__name">El Pendolero</h3>
+        <p class="venue-card__time">13:45 h</p>
+        <p class="venue-card__address">Carretera del Pardo, s/n, 28250 Torrelodones, Madrid</p>
+        <div class="venue-card__actions">
+          <a class="btn-link" href="https://maps.app.goo.gl/maPW66Augg6KndL39" target="_blank" rel="noopener">Ver en Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ETIQUETA ============ -->
+    <section class="section section--dresscode">
+      <div class="section-head reveal">
+        <p class="overline">Código de vestimenta</p>
+        <h2 class="script-title">De etiqueta</h2>
+      </div>
+
+      <img src="assets/dress-code.webp" alt="Invitados vestidos de etiqueta" class="dresscode__img reveal" />
+
+      <p class="section-text reveal">
+        La etiqueta del evento es formal. Por ello, os rogamos evitar el calzado deportivo. Asimismo, el blanco y los tonos similares quedan reservados para la novia.
+      </p>
+
+      <!-- Aviso sobre el frío de diciembre — como un P.D. cálido -->
+      <p class="section-text dresscode__note reveal">
+        Y un pequeño aviso m&aacute;s: sacad el abrigo del armario, porque el fr&iacute;o no está invitado, pero seguro que aparece. Si el sol quiere acompañarnos el c&oacute;ctel se celebrará en el patio de la finca.
+      </p>
+
+      <!-- Reglas clave como píldoras visuales -->
+      <div class="dresscode__rules reveal">
+        <span class="dresscode__rule">Etiqueta formal</span>
+        <span class="dresscode__rule-sep">&middot;</span>
+        <span class="dresscode__rule">Sin blanco</span>
+        <span class="dresscode__rule-sep">&middot;</span>
+        <span class="dresscode__rule">Sin calzado deportivo</span>
+        <span class="dresscode__rule-sep">&middot;</span>
+        <span class="dresscode__rule">Abrigo</span>
+      </div>
+    </section>
+
+    <!-- ============ TRANSPORTE ============ -->
+    <section class="section section--transport">
+      <div class="section-head reveal">
+        <p class="overline">Cómo llegar</p>
+        <h2 class="script-title">Transporte</h2>
+
+      </div>
+      <p class="section-text reveal">La finca dispone de aparcamiento propio. Sin embargo, al estar situada en pleno Monte del Pardo, el acceso no es el más sencillo.</p>
+      <p class="section-text reveal">Para que no tengáis que preocuparos por nada, habrá servicio de autobuses de ida y vuelta: desde la Iglesia hasta la finca y, al finalizar la celebración, desde la finca a Madrid.</p>
+      <div class="dresscode__rules reveal">
+        <span class="dresscode__rule">IDA: 13:45 h desde Iglesia de Santa Bárbara a Finca El Pendolero</span>
+        <span class="dresscode__rule">VUELTA: 20:30 h y 23:00 h desde Finca El Pendolero a Iglesia de Santa Bárbara</span>
+      </div>
+    </section>
+
+    <!-- ============ REGALOS ============ -->
+    <section class="section section--gifts">
+      <div class="section-head reveal">
+        <p class="overline">Un pequeño detalle</p>
+        <h2 class="script-title">Vuestra presencia es nuestro mejor regalo</h2>
+      </div>
+      <p class="section-text reveal">Aun así, si además queréis ayudarnos a seguir construyendo nuestro proyecto de vida en común, nos hará muchísima ilusión contar con vuestra colaboración.</p>
+      <p class="section-text reveal">Tenemos por delante nuevos sueños, muchas aventuras y, cómo no, un viaje muy especial al otro hemisferio que ya nos está esperando para comenzar esta nueva etapa juntos.</p>
+      <div class="info-list reveal">
+        <details class="transfer">
+          <summary class="transfer__toggle">Transferencia bancaria</summary>
+          <div class="transfer__body">
+            <p class="transfer__label">Titular</p>
+            <p class="transfer__value">Francisco Irazola &amp; María José ———</p>
+            <p class="transfer__label">IBAN</p>
+            <p class="transfer__value">ES00 0000 0000 0000 0000 0000</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ CONFIRMACIÓN (RSVP) ============ -->
+    <section id="rsvp" class="section section--rsvp">
+      <div class="section-head reveal">
+        <p class="overline">Esperamos veros en este día tan especial</p>
+        <h2 class="script-title">Confirma tu asistencia</h2>
+      </div>
+
+      <p class="rsvp-deadline reveal">No te olvides de completar el formulario antes del <strong>14 de noviembre de 2026</strong></p>
+
+      <form class="rsvp-form reveal" id="rsvpForm">
+        <fieldset class="field">
+          <legend class="field__label">¿Nos acompañarás? *</legend>
+          <label class="radio"><input type="radio" name="asistencia" value="si" required /> Sí, allí estaré</label>
+          <label class="radio"><input type="radio" name="asistencia" value="no" /> Lo siento, no podré asistir</label>
+        </fieldset>
+
+        <div class="field">
+          <label class="field__label" for="nombre">Nombre completo *</label>
+          <input class="input" type="text" id="nombre" name="nombre" required />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="acompanantes">Acompañantes</label>
+          <input class="input" type="text" id="acompanantes" name="acompanantes" />
+        </div>
+
+        <fieldset class="field">
+          <legend class="field__label">Alergias o necesidades alimentarias</legend>
+          <label class="checkbox"><input type="checkbox" name="alergia" value="sin-gluten" /> Sin gluten / Celíaco</label>
+          <label class="checkbox"><input type="checkbox" name="alergia" value="sin-lactosa" /> Sin lactosa</label>
+          <label class="checkbox"><input type="checkbox" name="alergia" value="vegetariano" /> Vegetariano</label>
+          <label class="checkbox"><input type="checkbox" name="alergia" value="frutos-secos" /> Alergia a frutos secos</label>
+          <label class="checkbox"><input type="checkbox" name="alergia" value="mariscos" /> Alergia a mariscos</label>
+        </fieldset>
+
+        <div class="field">
+          <label style="display:block; margin-bottom:.5rem; color:var(--text);" for="alergias-otras">Otras alergias, intolerancias o detalles que debamos conocer para ajustar el menú</label>
+          <input class="input" type="text" id="alergias-otras" name="alergias-otras" />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="telefono">Teléfono de contacto *</label>
+          <input class="input" type="tel" id="telefono" name="telefono" required />
+        </div>
+
+        <fieldset class="field">
+          <legend class="field__label">Transporte</legend>
+          <label class="checkbox"><input type="checkbox" name="transporte" value="si" /> Necesito transporte a la finca</label>
+          <label class="checkbox"><input type="checkbox" name="transporte-vuelta" value="si" /> Necesito transporte de vuelta a Madrid (Iglesia de Santa Bárbara)</label>
+        </fieldset>
+
+
+
+        <div class="field">
+          <label class="field__label" for="mensaje">Mensaje para los novios (opcional)</label>
+          <textarea class="input" id="mensaje" name="mensaje" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar confirmación</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Modal de confirmación RSVP -->
+  <div id="rsvp-modal" class="rsvp-modal" hidden aria-modal="true" role="dialog">
+    <div class="rsvp-modal__backdrop"></div>
+    <div class="rsvp-modal__box">
+      <button class="rsvp-modal__close" aria-label="Cerrar">&#x2715;</button>
+      <img class="rsvp-modal__pitu" src="assets/pitu.jpg" alt="" aria-hidden="true" />
+      <p class="rsvp-modal__msg">¡Gracias por confirmar!<br>Nos vemos el 28 de noviembre. 💛</p>
+    </div>
+  </div>
+
+
+  <script src="js/script.js?v=9"></script>
+</body>
+</html>
