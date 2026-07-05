@@ -286,3 +286,104 @@ document.querySelectorAll('[data-cal]').forEach((link) => {
     URL.revokeObjectURL(url);
   });
 });
+
+/* ---------- 6. Carrusel de fotos (desplazamiento continuo de derecha a izquierda) ---------- */
+(function () {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+
+  // Duplica los slides para el loop infinito
+  const origSlides = Array.from(track.children);
+  origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
+
+  const GAP = 16;           // px — debe coincidir con gap del CSS (1rem)
+  const SPEED = 3.0;        // px por frame (~180px/s a 60fps)
+  const VISIBLE = 4;        // fotos visibles entre las flechas
+
+  function setSlideWidth() {
+    const w = Math.floor((carousel.offsetWidth - (VISIBLE - 1) * GAP) / VISIBLE);
+    track.querySelectorAll('.carousel__slide').forEach(s => s.style.width = w + 'px');
+  }
+  if (document.readyState === 'complete') {
+    setSlideWidth();
+  } else {
+    window.addEventListener('load', setSlideWidth, { once: true });
+  }
+  window.addEventListener('resize', setSlideWidth);
+
+  let offset = 0;
+  let paused = false;
+  let raf;
+
+  // Ancho de un ciclo completo (13 slides originales + gaps)
+  function cycleWidth() {
+    const slide = track.querySelector('.carousel__slide');
+    return origSlides.length * (slide.offsetWidth + GAP);
+  }
+
+  function step() {
+    if (!paused) {
+      offset += SPEED;
+      if (offset >= cycleWidth()) offset -= cycleWidth();
+      track.style.transform = `translateX(${-offset}px)`;
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  raf = requestAnimationFrame(step);
+
+  // Pausa al pasar el ratón / tocar
+  const carousel = track.closest('.carousel');
+  carousel.addEventListener('mouseenter', () => { paused = true; });
+  carousel.addEventListener('mouseleave', () => { paused = false; });
+
+  // Drag / swipe para desplazar manualmente
+  let dragStart = null;
+  let dragOffset = 0;
+
+  carousel.addEventListener('pointerdown', (e) => {
+    dragStart = e.clientX;
+    dragOffset = offset;
+    paused = true;
+    carousel.setPointerCapture(e.pointerId);
+  });
+
+  carousel.addEventListener('pointermove', (e) => {
+    if (dragStart === null) return;
+    const delta = dragStart - e.clientX;
+    offset = dragOffset + delta;
+    const cw = cycleWidth();
+    offset = ((offset % cw) + cw) % cw;
+    track.style.transform = `translateX(${-offset}px)`;
+  });
+
+  carousel.addEventListener('pointerup', () => {
+    dragStart = null;
+    paused = false;
+  });
+  carousel.addEventListener('pointercancel', () => {
+    dragStart = null;
+    paused = false;
+  });
+
+  // Flechas: avanza/retrocede un slide con animación suave, luego reanuda
+  let arrowTimer = null;
+  function jumpBy(delta) {
+    const slideW = track.querySelector('.carousel__slide').offsetWidth + GAP;
+    paused = true;
+    clearTimeout(arrowTimer);
+    track.style.transition = 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94)';
+    const cw = cycleWidth();
+    offset = ((offset + delta * slideW) % cw + cw) % cw;
+    track.style.transform = `translateX(${-offset}px)`;
+    arrowTimer = setTimeout(() => {
+      track.style.transition = '';
+      paused = false;
+    }, 2000);
+  }
+
+  document.querySelector('.carousel-arrow--prev')
+    ?.addEventListener('click', () => jumpBy(-1));
+  document.querySelector('.carousel-arrow--next')
+    ?.addEventListener('click', () => jumpBy(1));
+})();
