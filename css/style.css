@@ -768,6 +768,10 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
 .carousel-arrow--prev { margin-left: clamp(.4rem, 2vw, 1.2rem); }
 .carousel-arrow--next { margin-right: clamp(.4rem, 2vw, 1.2rem); }
 
+@media (max-width: 480px) {
+  .carousel-arrow { display: none; }
+}
+
 .carousel {
   flex: 1;
   overflow: hidden;
