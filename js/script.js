@@ -139,7 +139,7 @@ function closeModal(modal) {
   setTimeout(() => { modal.hidden = true; }, 400);
 }
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwfdgbEE03KK2yR4xlz67ByXpckv6NZOVKPR0fAXtyL251JZ6nSIflaVr60nd3oAEuT/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuz9YLxQswPiSGDaB60UxbMoLzqJCReCh583SW8N08g3FxnHinC36SKatuvpZszK1Y/exec';
 
 const rsvpForm = document.getElementById('rsvpForm');
 if (rsvpForm) {
@@ -151,8 +151,19 @@ if (rsvpForm) {
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
-    const data = Object.fromEntries(new FormData(rsvpForm));
-    if (!data.transporte) data.transporte = 'No';
+    const fd = new FormData(rsvpForm);
+    const alergias = fd.getAll('alergia').join(', ') || 'Ninguna';
+    const data = {
+      asistencia:        fd.get('asistencia') || '',
+      nombre:            fd.get('nombre') || '',
+      acompanantes:      fd.get('acompanantes') || '',
+      alergias:          alergias,
+      'alergias-otras':  fd.get('alergias-otras') || '',
+      telefono:          fd.get('telefono') || '',
+      transporte:        fd.get('transporte') ? 'Sí' : 'No',
+      'transporte-vuelta': fd.get('transporte-vuelta') ? 'Sí' : 'No',
+      mensaje:           fd.get('mensaje') || '',
+    };
 
     try {
       await fetch(SCRIPT_URL, {
