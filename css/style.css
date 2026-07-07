@@ -477,7 +477,7 @@ a { color: inherit; }
 @media (max-width: 500px) {
   .story__chapter { gap: 1.2rem; }
   .story__chapter-title { font-size: 1.4rem; }
-  .story__chapter-text { font-size: 1.05rem; }
+  .story__chapter-text { font-size: 1.05rem; text-align: center; }
   .story__timeline { text-align: center; }
 }
 
