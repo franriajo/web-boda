@@ -109,7 +109,7 @@ a { color: inherit; }
   left: 50%; top: 54.6%;
   transform: translate(-50%, -50%);
   width: min(30vw, 200px); height: auto;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,.45));   /* el lacre apoyado en el sobre */
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.45));
   pointer-events: none; user-select: none;
   z-index: 3;
   opacity: 1;
@@ -478,6 +478,7 @@ a { color: inherit; }
   .story__chapter { gap: 1.2rem; }
   .story__chapter-title { font-size: 1.4rem; }
   .story__chapter-text { font-size: 1.05rem; }
+  .story__timeline { text-align: center; }
 }
 
 /* =========================================================

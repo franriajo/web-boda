@@ -297,7 +297,7 @@ document.querySelectorAll('[data-cal]').forEach((link) => {
   origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
 
   const GAP = 16;           // px — debe coincidir con gap del CSS (1rem)
-  const SPEED = window.innerWidth <= 480 ? 2.0 : 3.0; // 120px/s móvil, 180px/s escritorio
+  const SPEED = window.innerWidth <= 480 ? 1.667 : 3.0; // 100px/s móvil, 180px/s escritorio
   function getVisible() {
     const vw = window.innerWidth;
     if (vw <= 480) return 2;
