@@ -568,7 +568,7 @@ a { color: inherit; }
    LUGARES
    ========================================================= */
 .section--venue { max-width: 760px; }
-.venue-card { padding: 2.5rem 1rem; }
+.venue-card { padding: 0.25rem 1rem; }
 .venue-card__photo {
   width: clamp(280px, 72%, 480px);
   display: block;
@@ -691,15 +691,34 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
 .transfer__body {
   padding: 1rem 1.2rem 1.1rem;
   border-top: 1px solid var(--border);
-  display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; align-items: baseline;
+  display: flex; flex-direction: column; gap: .15rem;
 }
 .transfer__label {
   font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--muted); white-space: nowrap;
+  color: var(--muted); white-space: nowrap; margin-top: .5rem;
 }
+.transfer__label:first-child { margin-top: 0; }
 .transfer__value {
-  font-size: .95rem; color: var(--text); letter-spacing: .04em;
+  font-size: .95rem; color: var(--text); letter-spacing: .04em; text-align: center;
 }
+.transfer__value--bold {
+  font-weight: 600; font-size: 1rem;
+}
+.transfer__iban-row {
+  display: flex; flex-direction: row; align-items: center; justify-content: center; gap: .5rem;
+}
+.transfer__iban-img {
+  max-width: calc(100% - 2.5rem); height: auto; max-height: 34px;
+}
+.transfer__copy-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted); background: none;
+  border: 1.5px solid var(--border); border-radius: 5px;
+  padding: .35rem .4rem; cursor: pointer; flex-shrink: 0;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.transfer__copy-btn:hover { color: var(--accent); border-color: var(--accent); background: hsl(40 55% 45% / .06); }
+.transfer__copy-btn.copied { color: var(--accent); border-color: var(--accent); }
 
 .rsvp-form { max-width: 460px; margin: 1.5rem auto 0; text-align: left; }
 .field { border: 0; margin-bottom: 1.5rem; }

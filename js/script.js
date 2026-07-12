@@ -297,7 +297,7 @@ document.querySelectorAll('[data-cal]').forEach((link) => {
   origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
 
   const GAP = 16;           // px — debe coincidir con gap del CSS (1rem)
-  const SPEED = window.innerWidth <= 480 ? 0.5 : 3.0; // 60px/s móvil, 180px/s escritorio
+  const SPEED = window.innerWidth <= 480 ? 1.0 : 3.0; // 60px/s móvil, 180px/s escritorio
   function getVisible() {
     const vw = window.innerWidth;
     if (vw <= 480) return 2;
@@ -394,3 +394,18 @@ document.querySelectorAll('[data-cal]').forEach((link) => {
   document.querySelector('.carousel-arrow--next')
     ?.addEventListener('click', () => jumpBy(1));
 })();
+
+/* ---------- IBAN copy ---------- */
+const ICON_COPY = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+const ICON_CHECK = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+function copyIban(btn) {
+  navigator.clipboard.writeText('ES80 0081 2715 4100 2223 8744').then(() => {
+    btn.innerHTML = ICON_CHECK;
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = ICON_COPY;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}

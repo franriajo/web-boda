@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=54" />
+  <link rel="stylesheet" href="css/style.css?v=55" />
   <link rel="icon" href="assets/monogram-mf.webp" />
 </head>
 <body>
@@ -180,7 +180,7 @@
     <!-- ============ LUGARES ============ -->
     <section class="section section--venue">
       <div class="venue-card reveal reveal--transform-only">
-        <img src="assets/sta_barbara_nobg.webp" alt="Iglesia de Santa Bárbara" class="venue-card__photo venue-card__photo--church" style="width:clamp(220px,63%,420px)" />
+        <img src="assets/sta_barbara_definitiva_nobg.webp" alt="Ilustración Santa Bárbara" class="venue-card__photo venue-card__photo--church" style="width:clamp(220px,63%,420px)" />
         <p class="overline">La ceremonia se celebrará en</p>
         <h3 class="venue-card__name">Santa Bárbara</h3>
         <p class="venue-card__time">11:15 h</p>
@@ -190,8 +190,8 @@
         </div>
       </div>
 
-      <div class="venue-card reveal">
-        <img src="assets/finca-coctel.webp" alt="Finca El Pendolero" class="venue-card__photo" />
+      <div class="venue-card reveal" style="padding-top:0;margin-top:-6rem">
+        <img src="assets/finca-coctel.webp" alt="Finca El Pendolero" class="venue-card__photo" style="margin-bottom:-2rem" />
         <p class="overline">El cóctel se celebrará en</p>
         <h3 class="venue-card__name">El Pendolero</h3>
         <p class="venue-card__time">13:45 h</p>
@@ -200,6 +200,7 @@
           <a class="btn-link" href="https://maps.app.goo.gl/maPW66Augg6KndL39" target="_blank" rel="noopener">Ver en Google Maps</a>
         </div>
       </div>
+
     </section>
 
     <!-- ============ ETIQUETA ============ -->
@@ -260,9 +261,17 @@
           <summary class="transfer__toggle">Transferencia bancaria</summary>
           <div class="transfer__body">
             <p class="transfer__label">Titular</p>
-            <p class="transfer__value">Francisco Irazola &amp; María José ———</p>
+            <p class="transfer__value transfer__value--bold">Francisco Irazola Laguna &amp; María José Palomar Bueno</p>
             <p class="transfer__label">IBAN</p>
-            <p class="transfer__value">ES00 0000 0000 0000 0000 0000</p>
+            <div class="transfer__iban-row">
+              <img src="assets/iban.webp" alt="Número de cuenta IBAN" class="transfer__iban-img" />
+              <button type="button" class="transfer__copy-btn" onclick="copyIban(this)" aria-label="Copiar IBAN">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </details>
       </div>
