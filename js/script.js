@@ -11,11 +11,17 @@
     gate.classList.add('is-hidden');
     return;
   }
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
+  const PASS_HASH = '2602cd57c0e10de3b4da294bcb04b8e0c4e32eb9eec8dbfe43d64b2597d7682f';
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const user = document.getElementById('loginUser').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value.trim();
-    if (user === 'mj&fran' && pass === '28112026') {
+    const hash = await sha256(pass);
+    if (user === 'mj&fran' && hash === PASS_HASH) {
       localStorage.setItem('boda-auth', 'ok');
       gate.classList.add('is-hidden');
     } else {

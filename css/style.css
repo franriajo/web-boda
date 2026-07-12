@@ -891,6 +891,7 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
   .countdown__sep { display: none; }
   .countdown__timer { gap: 1.4rem; }
   .footer__overlay { padding: 11rem 1.5rem 3rem; }
+  .section--venue .venue-card + .venue-card { margin-top: 3rem !important; padding-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
