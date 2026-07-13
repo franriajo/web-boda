@@ -27,7 +27,10 @@ html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
 body {
   font-family: var(--font-body);
   color: var(--text);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: url('../assets/paper-texture.webp');
+  background-repeat: repeat;
+  background-size: 512px 512px;
   font-weight: 400;
   font-size: 1.06rem;
   line-height: 1.7;
@@ -307,7 +310,7 @@ a { color: inherit; }
   min-height: 95svh;
   padding: 0;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
 }
 .hero__finca-img {
   position: absolute; inset: 0;
@@ -315,6 +318,9 @@ a { color: inherit; }
   object-fit: cover;
   object-position: center top;
   z-index: 0;
+  /* fundido inferior sobre la textura de papel del body */
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 }
 .hero--finca .hero__content {
   position: absolute; top: 0; left: 0; right: 0;
@@ -337,12 +343,16 @@ a { color: inherit; }
     hsl(50 28% 92% / 0) 100%);
   z-index: 1; pointer-events: none;
 }
-/* degradado de salida abajo */
+/* textura de papel superpuesta a toda la portada (imagen incluida):
+   multiply = efecto "impreso sobre la invitación" */
 .hero--finca::after {
   content: "";
-  position: absolute; inset: auto 0 0 0; height: 22%;
-  background: linear-gradient(to bottom, hsl(50 28% 92% / 0), var(--bg));
-  z-index: 1; pointer-events: none;
+  position: absolute; inset: 0;
+  background: url('../assets/paper-texture.webp') repeat;
+  background-size: 512px 512px;
+  mix-blend-mode: multiply;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* ESCRITORIO (ancho ≥ 760px): aspect-ratio fijo en vez de altura de pantalla */
@@ -411,25 +421,28 @@ a { color: inherit; }
   position: relative;
   width: 100%;
   margin: 0;
-  background: var(--bg);
+  background: transparent;
   overflow: hidden;
   line-height: 0;            /* sin hueco bajo la imagen */
 }
+/* fundido en los 4 bordes con mask: deja ver la textura de papel del body */
 .photo-band__img {
   width: 100%;
   display: block;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, black 22%),
+    linear-gradient(to top,    transparent 0%, black 22%),
+    linear-gradient(to right,  transparent 0%, black 18%),
+    linear-gradient(to left,   transparent 0%, black 18%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, black 22%),
+    linear-gradient(to top,    transparent 0%, black 22%),
+    linear-gradient(to right,  transparent 0%, black 18%),
+    linear-gradient(to left,   transparent 0%, black 18%);
+  mask-composite: intersect;
 }
-/* degradado en los 4 bordes — top, bottom, left, right */
-.photo-band::before {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to bottom, var(--bg) 0%, transparent 22%),
-    linear-gradient(to top,    var(--bg) 0%, transparent 22%),
-    linear-gradient(to right,  var(--bg) 0%, transparent 18%),
-    linear-gradient(to left,   var(--bg) 0%, transparent 18%);
-  z-index: 1; pointer-events: none;
-}
+.photo-band::before { display: none; }
 .photo-band::after { display: none; }
 
 /* =========================================================
@@ -487,7 +500,7 @@ a { color: inherit; }
 .countdown {
   text-align: center;
   padding: 5rem 1.5rem;
-  background: var(--bg);
+  background: transparent;
 }
 .countdown .script-title { color: #882e2b; }
 .countdown__timer {
@@ -536,18 +549,26 @@ a { color: inherit; }
   border: 1px solid var(--muted);
   padding: 0 2rem;
 }
-.timeline::before {
-  content: "";
-  position: absolute; top: 2.5rem; bottom: 2.5rem; left: 50%;
-  width: 1px; background: var(--border);
-  transform: translateX(-50%);
-}
+/* la línea se dibuja solo en los huecos entre items (así el fondo
+   texturizado del body se ve intacto detrás del contenido) */
 .timeline__item {
   position: relative;
   padding: 2rem 0;
 }
+.timeline__item::before,
+.timeline__item::after {
+  content: "";
+  position: absolute; left: 50%;
+  width: 1px; height: 2rem;
+  background: var(--border);
+  transform: translateX(-50%);
+}
+.timeline__item::before { top: 0; }
+.timeline__item::after  { bottom: 0; }
+.timeline__item:first-child::before { display: none; }
+.timeline__item:last-child::after   { display: none; }
 .timeline__content {
-  background: var(--bg);
+  background: transparent;
   position: relative;
   z-index: 1;
   padding: .4rem 0;
