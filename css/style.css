@@ -902,8 +902,9 @@ details[open] .transfer__toggle::after { transform: rotate(90deg); }
 .reveal {
   opacity: 0; transform: translateY(28px);
   transition: opacity .9s ease, transform .9s ease;
+  pointer-events: none;   /* invisible ⇒ no debe bloquear clics de lo que tenga debajo */
 }
-.reveal.is-visible { opacity: 1; transform: none; }
+.reveal.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 
 /* =========================================================
    RESPONSIVE
